@@ -1,5 +1,6 @@
 #include "stdafx.h"
 #include "desktop_record.h"
+#include <windows.h>
 
 extern "C"
 {
@@ -20,6 +21,16 @@ extern "C"
     //#pragma comment(lib, "swresample.lib")  
 #pragma comment(lib, "swscale.lib")  
 };
+
+static char *dup_wchar_to_utf8(wchar_t *w)
+{
+    char *s = NULL;
+    int l = WideCharToMultiByte(CP_UTF8, 0, w, -1, 0, 0, 0, 0);
+    s = (char *)av_malloc(l);
+    if (s)
+        WideCharToMultiByte(CP_UTF8, 0, w, -1, s, l, 0, 0);
+    return s;
+}
 
 char * EnumAudioDevice()
 {
@@ -75,7 +86,7 @@ int OpenVideoCapture()
         printf("Couldn't find stream information.（无法获取视频流信息）\n");
         return -1;
     }
-    if (pFormatCtx_Video->streams[0]->codec->codec_type != AVMEDIA_TYPE_VIDEO)
+    if (pFormatCtx_Video->streams[0]->codecpar->codec_type != AVMEDIA_TYPE_VIDEO)
     {
         printf("Couldn't find video stream information.（无法获取视频流信息）\n");
         return -1;
@@ -103,15 +114,6 @@ int OpenVideoCapture()
     return 0;
 }
 
-static char *dup_wchar_to_utf8(wchar_t *w)
-{
-    char *s = NULL;
-    int l = WideCharToMultiByte(CP_UTF8, 0, w, -1, 0, 0, 0, 0);
-    s = (char *)av_malloc(l);
-    if (s)
-        WideCharToMultiByte(CP_UTF8, 0, w, -1, s, l, 0, 0);
-    return s;
-}
 
 int OpenAudioCapture()
 {
