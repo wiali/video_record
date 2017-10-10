@@ -13,8 +13,6 @@ TEMPLATE = app
 
 INCLUDEPATH += $$PWD\..\video_record\libav\include
 
-LIBS += $$PWD\..\video_record\libav\libs
-
 SOURCES += main.cpp\
         mainwindow.cpp \
     audio_recording.cpp \
@@ -25,5 +23,8 @@ HEADERS  += mainwindow.h \
     audio_recording.h \
     desktop_record.h \
     video_recording.h
+
+LIBDIR = $$PWD\..\video_record\libav\libs
+#LIBS += -avcodec -avdevice -avfilter -avformat -avresample -avutil -swscale
 
 FORMS    += mainwindow.ui

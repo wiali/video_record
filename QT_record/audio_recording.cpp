@@ -2,6 +2,8 @@
 #include <math.h>
 #define  _USE_MATH_DEFINES
 
+#include <QFile>
+
 extern "C"
 {
 #include "libavcodec/avcodec.h"
@@ -9,6 +11,14 @@ extern "C"
 #include "libavutil/common.h"
 #include "libavutil/frame.h"
 #include "libavutil/samplefmt.h"
+
+#pragma comment(lib, "C:/A_video/video_record/video_record/libav/lib/avcodec.lib")
+#pragma comment(lib, "C:/A_video/video_record/video_record/libav/lib/avdevice.lib")
+#pragma comment(lib, "C:/A_video/video_record/video_record/libav/lib/avfilter.lib")
+#pragma comment(lib, "C:/A_video/video_record/video_record/libav/lib/avformat.lib")
+#pragma comment(lib, "C:/A_video/video_record/video_record/libav/lib/avresample.lib")
+#pragma comment(lib, "C:/A_video/video_record/video_record/libav/lib/avutil.lib")
+#pragma comment(lib, "C:/A_video/video_record/video_record/libav/lib/swscale.lib")
 }
 
 /* check that a given sample format is supported by the encoder */
@@ -56,7 +66,7 @@ static int select_channel_layout(const AVCodec *codec)
     return best_ch_layout;
 }
 static void encode(AVCodecContext *ctx, AVFrame *frame, AVPacket *pkt,
-    FILE *output)
+    QFile& output)
 {
     int ret;
     /* send the frame for encoding */
@@ -75,7 +85,7 @@ static void encode(AVCodecContext *ctx, AVFrame *frame, AVPacket *pkt,
             fprintf(stderr, "error encoding audio frame\n");
             return;
         }
-        fwrite(pkt->data, 1, pkt->size, output);
+        output.write((const char*)pkt->data, pkt->size);
         av_packet_unref(pkt);
     }
 }
@@ -88,11 +98,11 @@ AudioRecording::AudioRecording()
     AVFrame *frame;
     AVPacket *pkt;
     int i, j, k, ret;
-    FILE *f;
     uint16_t *samples;
     float t, tincr;
 
     filename = "audio1.mp3";
+
     /* register all the codecs */
     avcodec_register_all();
     /* find the MP2 encoder */
@@ -120,11 +130,13 @@ AudioRecording::AudioRecording()
         fprintf(stderr, "could not open codec\n");
         return;
     }
-    fopen_s(&f, filename, "wb");
-    if (!f) {
-        fprintf(stderr, "could not open %s\n", filename);
-        return;
+
+    QFile file(filename);
+    if(!file.open(QIODevice::ReadWrite))
+    {
+         return;
     }
+
     /* packet for holding encoded output */
     pkt = av_packet_alloc();
     if (!pkt) {
@@ -162,11 +174,11 @@ AudioRecording::AudioRecording()
                 samples[2 * j + k] = samples[2 * j];
             t += tincr;
         }
-        encode(c, frame, pkt, f);
+        encode(c, frame, pkt, file);
     }
     /* flush the encoder */
-    encode(c, NULL, pkt, f);
-    fclose(f);
+    encode(c, NULL, pkt, file);
+    file.close();
     av_frame_free(&frame);
     av_packet_free(&pkt);
     avcodec_free_context(&c);

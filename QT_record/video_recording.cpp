@@ -6,10 +6,17 @@ extern "C"
 #include "libavcodec/avcodec.h"
 #include "libavutil/frame.h"
 #include "libavutil/imgutils.h"
+
+#pragma comment(lib, "avcodec.lib")
+#pragma comment(lib, "avdevice.lib")
+#pragma comment(lib, "avfilter.lib")
+#pragma comment(lib, "avformat.lib")
+#pragma comment(lib, "avresample.lib")
+#pragma comment(lib, "avutil.lib")
+#pragma comment(lib, "swscale.lib")
 }
 
-static void encode(AVCodecContext *enc_ctx, AVFrame *frame, AVPacket *pkt,
-    QFile *outfile)
+static void encode(AVCodecContext *enc_ctx, AVFrame *frame, AVPacket *pkt, QFile& outfile)
 {
     int ret;
     /* send the frame to the encoder */
@@ -27,27 +34,28 @@ static void encode(AVCodecContext *enc_ctx, AVFrame *frame, AVPacket *pkt,
             return;
         }
         printf("encoded frame %3""ld"" (size=%5d)\n", pkt->pts, pkt->size);
-        outfile->write(pkt->data, pkt->size);
+        outfile.write((const char*)(pkt->data), pkt->size);
         av_packet_unref(pkt);
     }
 }
 
 VideoRecording::VideoRecording()
 {
-    const char *filename;
+    const char *filename = "video1.avi";
     const AVCodec *codec;
     AVCodecContext *c = NULL;
     int i, ret, x, y;
-    FILE *f;
+
     AVFrame *picture;
     AVPacket *pkt;
     uint8_t endcode[] = { 0, 0, 1, 0xb7 };
-    //if (argc <= 1) {
-    //    fprintf(stderr, "Usage: %s <output file>\n", argv[0]);
-    //    exit(0);
-    //}
-    //filename = argv[1];
-    filename = "video1.avi";
+
+    QFile file(filename);
+    if(!file.open(QIODevice::ReadWrite))
+    {
+         return;
+    }
+
     avcodec_register_all();
     /* find the mpeg1video encoder */
     codec = avcodec_find_encoder(AV_CODEC_ID_MPEG1VIDEO);
@@ -76,11 +84,7 @@ VideoRecording::VideoRecording()
         fprintf(stderr, "could not open codec\n");
         return;
     }
-    fopen_s(&f, filename, "wb");
-    if (!f) {
-        fprintf(stderr, "could not open %s\n", filename);
-        return;
-    }
+
     picture->format = c->pix_fmt;
     picture->width = c->width;
     picture->height = c->height;
@@ -112,13 +116,13 @@ VideoRecording::VideoRecording()
         }
         picture->pts = i;
         /* encode the image */
-        encode(c, picture, pkt, f);
+        encode(c, picture, pkt, file);
     }
     /* flush the encoder */
-    encode(c, NULL, pkt, f);
+    encode(c, NULL, pkt, file);
     /* add sequence end code to have a real MPEG file */
-    fwrite(endcode, 1, sizeof(endcode), f);
-    fclose(f);
+    file.write((const char*)endcode, sizeof(endcode) );
+    file.close();
     avcodec_free_context(&c);
     av_frame_free(&picture);
     av_packet_free(&pkt);

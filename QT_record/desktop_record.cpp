@@ -3,23 +3,17 @@
 
 extern "C"
 {
-#include "libavcodec/avcodec.h"  
-#include "libavformat/avformat.h"  
-#include "libswscale/swscale.h"  
-#include "libavdevice/avdevice.h"  
-#include "libavutil/audio_fifo.h"  
+#include "libavcodec/avcodec.h"
+#include "libavformat/avformat.h"
+#include "libswscale/swscale.h"
+#include "libavdevice/avdevice.h"
+#include "libavutil/audio_fifo.h"
+#include "libavutil/mathematics.h"
+#include "libavutil/channel_layout.h"
 
-#pragma comment(lib, "avcodec.lib")  
-#pragma comment(lib, "avformat.lib")  
-#pragma comment(lib, "avutil.lib")  
-#pragma comment(lib, "avdevice.lib")  
-#pragma comment(lib, "avfilter.lib")  
+#pragma comment(lib, "winmm.lib")
 
-    //#pragma comment(lib, "avfilter.lib")  
-    //#pragma comment(lib, "postproc.lib")  
-    //#pragma comment(lib, "swresample.lib")  
-#pragma comment(lib, "swscale.lib")  
-};
+}
 
 static char *dup_wchar_to_utf8(wchar_t *w)
 {
@@ -67,47 +61,47 @@ DWORD WINAPI AudioCapThreadProc(LPVOID lpParam);
 int OpenVideoCapture()
 {
     AVInputFormat *ifmt = av_find_input_format("gdigrab");
-    //ÕâÀï¿ÉÒÔ¼Ó²ÎÊý´ò¿ª£¬ÀýÈç¿ÉÒÔÖ¸¶¨²É¼¯Ö¡ÂÊ  
+
     AVDictionary *options = NULL;
     av_dict_set(&options, "framerate", "15", NULL);
-    //av_dict_set(&options,"offset_x","20",0);  
-    //The distance from the top edge of the screen or desktop  
-    //av_dict_set(&options,"offset_y","40",0);  
-    //Video frame size. The default is to capture the full screen  
-    //av_dict_set(&options,"video_size","320x240",0);  
+    //av_dict_set(&options,"offset_x","20",0);
+    //The distance from the top edge of the screen or desktop
+    //av_dict_set(&options,"offset_y","40",0);
+    //Video frame size. The default is to capture the full screen
+    //av_dict_set(&options,"video_size","320x240",0);
     if (avformat_open_input(&pFormatCtx_Video, "desktop", ifmt, &options) != 0)
     {
-        printf("Couldn't open input stream.£¨ÎÞ·¨´ò¿ªÊÓÆµÊäÈëÁ÷£©\n");
+        printf("Couldn't open input stream.????????????????????\n");
         return -1;
     }
     if (avformat_find_stream_info(pFormatCtx_Video, NULL) < 0)
     {
-        printf("Couldn't find stream information.£¨ÎÞ·¨»ñÈ¡ÊÓÆµÁ÷ÐÅÏ¢£©\n");
+        printf("Couldn't find stream information.??????????????????\n");
         return -1;
     }
     if (pFormatCtx_Video->streams[0]->codecpar->codec_type != AVMEDIA_TYPE_VIDEO)
     {
-        printf("Couldn't find video stream information.£¨ÎÞ·¨»ñÈ¡ÊÓÆµÁ÷ÐÅÏ¢£©\n");
+        printf("Couldn't find video stream information.??????????????????\n");
         return -1;
     }
     pCodecCtx_Video = pFormatCtx_Video->streams[0]->codec;
     pCodec_Video = avcodec_find_decoder(pCodecCtx_Video->codec_id);
     if (pCodec_Video == NULL)
     {
-        printf("Codec not found.£¨Ã»ÓÐÕÒµ½½âÂëÆ÷£©\n");
+        printf("Codec not found.??û?????????????\n");
         return -1;
     }
     if (avcodec_open2(pCodecCtx_Video, pCodec_Video, NULL) < 0)
     {
-        printf("Could not open codec.£¨ÎÞ·¨´ò¿ª½âÂëÆ÷£©\n");
+        printf("Could not open codec.???????????????\n");
         return -1;
     }
 
     img_convert_ctx = sws_getContext(pCodecCtx_Video->width, pCodecCtx_Video->height, pCodecCtx_Video->pix_fmt,
-        pCodecCtx_Video->width, pCodecCtx_Video->height, PIX_FMT_YUV420P, SWS_BICUBIC, NULL, NULL, NULL);
+        pCodecCtx_Video->width, pCodecCtx_Video->height, AV_PIX_FMT_YUV420P, SWS_BICUBIC, NULL, NULL, NULL);
 
     frame_size = avpicture_get_size(pCodecCtx_Video->pix_fmt, pCodecCtx_Video->width, pCodecCtx_Video->height);
-    //ÉêÇë30Ö¡»º´æ  
+    //????30?????
     fifo_video = av_fifo_alloc(30 * avpicture_get_size(AV_PIX_FMT_YUV420P, pCodecCtx_Video->width, pCodecCtx_Video->height));
 
     return 0;
@@ -116,15 +110,16 @@ int OpenVideoCapture()
 
 int OpenAudioCapture()
 {
-    //²éÕÒÊäÈë·½Ê½  
     AVInputFormat *pAudioInputFmt = av_find_input_format("dshow");
 
-    //ÒÔDirect ShowµÄ·½Ê½´ò¿ªÉè±¸£¬²¢½« ÊäÈë·½Ê½ ¹ØÁªµ½¸ñÊ½ÉÏÏÂÎÄ  
-    char * psDevName = dup_wchar_to_utf8(L"audio=Âó¿Ë·ç (Realtek High Definition Au");
+    wchar_t audioName[] = L"audio = Headset Microphone (Jabra UC VOICE 550 MS USB)";
+    //char * psDevName = dup_wchar_to_utf8("audio= (Realtek High Definition Au");
+    char*  psDevName = dup_wchar_to_utf8(audioName);
+    //const char*  psDevName = "default";
 
     if (avformat_open_input(&pFormatCtx_Audio, psDevName, pAudioInputFmt, NULL) < 0)
     {
-        printf("Couldn't open input stream.£¨ÎÞ·¨´ò¿ªÒôÆµÊäÈëÁ÷£©\n");
+        printf("Couldn't open input stream.\n");
         return -1;
     }
 
@@ -133,7 +128,7 @@ int OpenAudioCapture()
 
     if (pFormatCtx_Audio->streams[0]->codec->codec_type != AVMEDIA_TYPE_AUDIO)
     {
-        printf("Couldn't find video stream information.£¨ÎÞ·¨»ñÈ¡ÒôÆµÁ÷ÐÅÏ¢£©\n");
+        printf("Couldn't find video stream information.??????????????????\n");
         return -1;
     }
 
@@ -152,7 +147,10 @@ int OpenOutPut()
 {
     AVStream *pVideoStream = NULL, *pAudioStream = NULL;
     const char *outFileName = "test.mp4";
-    avformat_alloc_output_context2(&pFormatCtx_Out, NULL, NULL, outFileName);
+
+    //avformat_alloc_output_context2(&pFormatCtx_Out, NULL, NULL, outFileName);
+
+    pFormatCtx_Out = avformat_alloc_context();
 
     if (pFormatCtx_Video->streams[0]->codec->codec_type == AVMEDIA_TYPE_VIDEO)
     {
@@ -166,17 +164,17 @@ int OpenOutPut()
             return -1;
         }
 
-        //set codec context param  
+        //set codec context param
         pVideoStream->codec->codec = avcodec_find_encoder(AV_CODEC_ID_MPEG4);
         pVideoStream->codec->height = pFormatCtx_Video->streams[0]->codec->height;
         pVideoStream->codec->width = pFormatCtx_Video->streams[0]->codec->width;
 
         pVideoStream->codec->time_base = pFormatCtx_Video->streams[0]->codec->time_base;
         pVideoStream->codec->sample_aspect_ratio = pFormatCtx_Video->streams[0]->codec->sample_aspect_ratio;
-        // take first format from list of supported formats  
+        // take first format from list of supported formats
         pVideoStream->codec->pix_fmt = pFormatCtx_Out->streams[VideoIndex]->codec->codec->pix_fmts[0];
 
-        //open encoder  
+        //open encoder
         if (!pVideoStream->codec->codec)
         {
             printf("can not find the encoder!\n");
@@ -206,16 +204,17 @@ int OpenOutPut()
         pOutputCodecCtx->sample_rate = pFormatCtx_Audio->streams[0]->codec->sample_rate;
         pOutputCodecCtx->channel_layout = pFormatCtx_Out->streams[0]->codec->channel_layout;
         pOutputCodecCtx->channels = av_get_channel_layout_nb_channels(pAudioStream->codec->channel_layout);
+
         if (pOutputCodecCtx->channel_layout == 0)
         {
-            pOutputCodecCtx->channel_layout = AV_CH_LAYOUT_STEREO;
+            pOutputCodecCtx->channel_layout =  AV_CH_LAYOUT_STEREO;
             pOutputCodecCtx->channels = av_get_channel_layout_nb_channels(pOutputCodecCtx->channel_layout);
 
         }
         pOutputCodecCtx->sample_fmt = pAudioStream->codec->codec->sample_fmts[0];
         AVRational time_base = { 1, pAudioStream->codec->sample_rate };
         pAudioStream->time_base = time_base;
-        //audioCodecCtx->time_base = time_base;  
+        //audioCodecCtx->time_base = time_base;
 
         pOutputCodecCtx->codec_tag = 0;
         if (pFormatCtx_Out->oformat->flags & AVFMT_GLOBALHEADER)
@@ -223,7 +222,6 @@ int OpenOutPut()
 
         if (avcodec_open2(pOutputCodecCtx, pOutputCodecCtx->codec, 0) < 0)
         {
-            //±àÂëÆ÷´ò¿ªÊ§°Ü£¬ÍË³ö³ÌÐò  
             return -1;
         }
     }
@@ -252,12 +250,12 @@ DWORD WINAPI ScreenCapThreadProc(LPVOID lpParam)
     AVPacket packet;/* = (AVPacket *)av_malloc(sizeof(AVPacket))*/;
     int got_picture;
     AVFrame *pFrame;
-    pFrame = avcodec_alloc_frame();
+    pFrame = av_frame_alloc();
 
-    AVFrame *picture = avcodec_alloc_frame();
+    AVFrame *picture = av_frame_alloc();
     int size = avpicture_get_size(pFormatCtx_Out->streams[VideoIndex]->codec->pix_fmt,
         pFormatCtx_Out->streams[VideoIndex]->codec->width, pFormatCtx_Out->streams[VideoIndex]->codec->height);
-    //picture_buf = new uint8_t[size];  
+    //picture_buf = new uint8_t[size];
 
     avpicture_fill((AVPicture *)picture, picture_buf,
         pFormatCtx_Out->streams[VideoIndex]->codec->pix_fmt,
@@ -282,7 +280,7 @@ DWORD WINAPI ScreenCapThreadProc(LPVOID lpParam)
         {
             if (avcodec_decode_video2(pCodecCtx_Video, pFrame, &got_picture, &packet) < 0)
             {
-                printf("Decode Error.£¨½âÂë´íÎó£©\n");
+                printf("Decode Error.????????????\n");
                 continue;
             }
             if (got_picture)
@@ -301,11 +299,11 @@ DWORD WINAPI ScreenCapThreadProc(LPVOID lpParam)
             }
         }
         av_free_packet(&packet);
-        //Sleep(50);  
+        //Sleep(50);
     }
     av_frame_free(&pFrame);
     av_frame_free(&picture);
-    //delete[] picture_buf;  
+    //delete[] picture_buf;
     return 0;
 }
 
@@ -334,7 +332,7 @@ DWORD WINAPI AudioCapThreadProc(LPVOID lpParam)
 
         if (!gotframe)
         {
-            continue;//Ã»ÓÐ»ñÈ¡µ½Êý¾Ý£¬¼ÌÐøÏÂÒ»´Î  
+            continue;
         }
 
         if (NULL == fifo_audio)
@@ -362,15 +360,15 @@ DesktopRecord::DesktopRecord()
     avdevice_register_all();
     if (OpenVideoCapture() < 0)
     {
-        return -1;
+        return;
     }
     if (OpenAudioCapture() < 0)
     {
-        return -1;
+        return;
     }
     if (OpenOutPut() < 0)
     {
-        return -1;
+        return;
     }
 
     InitializeCriticalSection(&VideoSection);
@@ -388,25 +386,25 @@ DesktopRecord::DesktopRecord()
 
 
 
-    //star cap screen thread  
+    //star cap screen thread
     CreateThread(NULL, 0, ScreenCapThreadProc, 0, 0, NULL);
-    //star cap audio thread  
+    //star cap audio thread
     CreateThread(NULL, 0, AudioCapThreadProc, 0, 0, NULL);
     int64_t cur_pts_v = 0, cur_pts_a = 0;
     int VideoFrameIndex = 0, AudioFrameIndex = 0;
 
     while (1)
     {
-        if (_kbhit() != 0 && bCap)
-        {
-            bCap = false;
-            Sleep(2000);//¼òµ¥µÄÓÃsleepµÈ´ý²É¼¯Ïß³Ì¹Ø±Õ  
-        }
+//        if (_kbhit() != 0 && bCap)
+//        {
+//            bCap = false;
+//            Sleep(2000);//??????sleep???????????
+//        }
         if (fifo_audio && fifo_video)
         {
             int sizeAudio = av_audio_fifo_size(fifo_audio);
             int sizeVideo = av_fifo_size(fifo_video);
-            //»º´æÊý¾ÝÐ´Íê¾Í½áÊøÑ­»·  
+            //???????????????????
             if (av_audio_fifo_size(fifo_audio) <= pFormatCtx_Out->streams[AudioIndex]->codec->frame_size &&
                 av_fifo_size(fifo_video) <= frame_size && !bCap)
             {
@@ -417,7 +415,7 @@ DesktopRecord::DesktopRecord()
         if (av_compare_ts(cur_pts_v, pFormatCtx_Out->streams[VideoIndex]->time_base,
             cur_pts_a, pFormatCtx_Out->streams[AudioIndex]->time_base) <= 0)
         {
-            //read data from fifo  
+            //read data from fifo
             if (av_fifo_size(fifo_video) < frame_size && !bCap)
             {
                 cur_pts_v = 0x7fffffffffffffff;
@@ -433,7 +431,7 @@ DesktopRecord::DesktopRecord()
                     pFormatCtx_Out->streams[VideoIndex]->codec->width,
                     pFormatCtx_Out->streams[VideoIndex]->codec->height);
 
-                //pts = n * (£¨1 / timbase£©/ fps);  
+                //pts = n * (??1 / timbase??/ fps);
                 picture->pts = VideoFrameIndex * ((pFormatCtx_Video->streams[0]->time_base.den / pFormatCtx_Video->streams[0]->time_base.num) / 15);
 
                 int got_picture = 0;
@@ -445,7 +443,7 @@ DesktopRecord::DesktopRecord()
                 int ret = avcodec_encode_video2(pFormatCtx_Out->streams[VideoIndex]->codec, &pkt, picture, &got_picture);
                 if (ret < 0)
                 {
-                    //±àÂë´íÎó,²»Àí»á´ËÖ¡  
+                    //????????,?????????
                     continue;
                 }
 
@@ -453,16 +451,16 @@ DesktopRecord::DesktopRecord()
                 {
                     pkt.stream_index = VideoIndex;
                     pkt.pts = av_rescale_q_rnd(pkt.pts, pFormatCtx_Video->streams[0]->time_base,
-                        pFormatCtx_Out->streams[VideoIndex]->time_base, (AVRounding)(AV_ROUND_NEAR_INF | AV_ROUND_PASS_MINMAX));
+                        pFormatCtx_Out->streams[VideoIndex]->time_base, (AVRounding)(AV_ROUND_NEAR_INF )); //| AV_ROUND_PASS_MINMAX
                     pkt.dts = av_rescale_q_rnd(pkt.dts, pFormatCtx_Video->streams[0]->time_base,
-                        pFormatCtx_Out->streams[VideoIndex]->time_base, (AVRounding)(AV_ROUND_NEAR_INF | AV_ROUND_PASS_MINMAX));
+                        pFormatCtx_Out->streams[VideoIndex]->time_base, (AVRounding)(AV_ROUND_NEAR_INF)); // | AV_ROUND_PASS_MINMAX
 
                     pkt.duration = ((pFormatCtx_Out->streams[0]->time_base.den / pFormatCtx_Out->streams[0]->time_base.num) / 15);
 
                     cur_pts_v = pkt.pts;
 
                     ret = av_interleaved_write_frame(pFormatCtx_Out, &pkt);
-                    //delete[] pkt.data;  
+                    //delete[] pkt.data;
                     av_free_packet(&pkt);
                 }
                 VideoFrameIndex++;
@@ -472,7 +470,7 @@ DesktopRecord::DesktopRecord()
         {
             if (NULL == fifo_audio)
             {
-                continue;//»¹Î´³õÊ¼»¯fifo  
+                continue;//??d??'??fifo
             }
             if (av_audio_fifo_size(fifo_audio) < pFormatCtx_Out->streams[AudioIndex]->codec->frame_size && !bCap)
             {
@@ -498,7 +496,7 @@ DesktopRecord::DesktopRecord()
                     || pFormatCtx_Out->streams[0]->codec->channels != pFormatCtx_Audio->streams[AudioIndex]->codec->channels
                     || pFormatCtx_Out->streams[0]->codec->sample_rate != pFormatCtx_Audio->streams[AudioIndex]->codec->sample_rate)
                 {
-                    //Èç¹ûÊäÈëºÍÊä³öµÄÒôÆµ¸ñÊ½²»Ò»Ñù ÐèÒªÖØ²ÉÑù£¬ÕâÀïÊÇÒ»ÑùµÄ¾ÍÃ»×ö  
+                    //????????????????????????h?? ????????????????h???l?û??
                 }
 
                 AVPacket pkt_out;
@@ -550,9 +548,6 @@ DesktopRecord::DesktopRecord()
         avformat_close_input(&pFormatCtx_Audio);
         pFormatCtx_Audio = NULL;
     }
-
-    return 0;
-
 }
 
 
