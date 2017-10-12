@@ -23,3 +23,5 @@ http://blog.csdn.net/abc869788668/article/details/73921018
 http://answers.opencv.org/question/58331/opencv-300-and-opencl-benchmark-sobel-edge-detection/
 
 http://answers.opencv.org/question/63452/opencv-30-the-performance-of-umat/
+
+https://github.com/lheric/libgitlmvc
