@@ -1,0 +1,175 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>NoCalibrationDataForm</class>
+ <widget class="QWidget" name="NoCalibrationDataForm">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>791</width>
+    <height>601</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string notr="true">Form</string>
+  </property>
+  <property name="styleSheet">
+   <string notr="true"/>
+  </property>
+  <layout class="QVBoxLayout" name="verticalLayout">
+   <item>
+    <spacer name="verticalSpacer">
+     <property name="orientation">
+      <enum>Qt::Vertical</enum>
+     </property>
+     <property name="sizeHint" stdset="0">
+      <size>
+       <width>20</width>
+       <height>258</height>
+      </size>
+     </property>
+    </spacer>
+   </item>
+   <item>
+    <widget class="QLabel" name="label">
+     <property name="styleSheet">
+      <string notr="true">QLabel {
+   font-family: Segoe UI;
+   font-size: 15px;
+   color: #e7e7e7;
+   background-color: transparent;
+}</string>
+     </property>
+     <property name="text">
+      <string>Align the projector in Control before using Capture.</string>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignCenter</set>
+     </property>
+    </widget>
+   </item>
+   <item>
+    <spacer name="verticalSpacer_3">
+     <property name="orientation">
+      <enum>Qt::Vertical</enum>
+     </property>
+     <property name="sizeType">
+      <enum>QSizePolicy::Fixed</enum>
+     </property>
+     <property name="sizeHint" stdset="0">
+      <size>
+       <width>20</width>
+       <height>40</height>
+      </size>
+     </property>
+    </spacer>
+   </item>
+   <item>
+    <layout class="QHBoxLayout" name="horizontalLayout">
+     <item>
+      <spacer name="horizontalSpacer">
+       <property name="orientation">
+        <enum>Qt::Horizontal</enum>
+       </property>
+       <property name="sizeHint" stdset="0">
+        <size>
+         <width>40</width>
+         <height>20</height>
+        </size>
+       </property>
+      </spacer>
+     </item>
+     <item>
+      <widget class="QPushButton" name="openControlPanelButton">
+       <property name="styleSheet">
+        <string notr="true">QPushButton {
+    font-family: Segoe UI;
+    font-size: 13px;
+    background-color: #0096d6;
+    border-width: 2px;
+    border-radius: 3px;
+    border-color: #0096d6;
+    color: #e7e7e7;
+    padding: 8px 60px ;
+}
+
+QPushButton:hover {
+    background-color: #2ea8dd;
+    border-color: #2ea8dd;
+    color: #ffffff;
+}
+
+QPushButton:pressed {
+    background-color: #007aaf;
+    border-color: #007aaf;
+    color: #ffffff;
+}
+
+QPushButton:focus {
+    background-color: #0096d6;
+    border-color: rgba(255, 255, 255, 0.5);
+    color: #ffffff;
+}</string>
+       </property>
+       <property name="text">
+        <string>Launch Control</string>
+       </property>
+       <property name="flat">
+        <bool>true</bool>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <spacer name="horizontalSpacer_2">
+       <property name="orientation">
+        <enum>Qt::Horizontal</enum>
+       </property>
+       <property name="sizeHint" stdset="0">
+        <size>
+         <width>40</width>
+         <height>20</height>
+        </size>
+       </property>
+      </spacer>
+     </item>
+    </layout>
+   </item>
+   <item>
+    <spacer name="verticalSpacer_2">
+     <property name="orientation">
+      <enum>Qt::Vertical</enum>
+     </property>
+     <property name="sizeHint" stdset="0">
+      <size>
+       <width>20</width>
+       <height>257</height>
+      </size>
+     </property>
+    </spacer>
+   </item>
+  </layout>
+ </widget>
+ <resources/>
+ <connections>
+  <connection>
+   <sender>openControlPanelButton</sender>
+   <signal>clicked()</signal>
+   <receiver>NoCalibrationDataForm</receiver>
+   <slot>onOpenControlPanelClicked()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>499</x>
+     <y>353</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>215</x>
+     <y>378</y>
+    </hint>
+   </hints>
+  </connection>
+ </connections>
+ <slots>
+  <slot>onRetryButtonReleased()</slot>
+  <slot>onOpenControlPanelClicked()</slot>
+ </slots>
+</ui>

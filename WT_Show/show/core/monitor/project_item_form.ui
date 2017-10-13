@@ -1,0 +1,195 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>ProjectItemForm</class>
+ <widget class="QWidget" name="ProjectItemForm">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>400</width>
+    <height>80</height>
+   </rect>
+  </property>
+  <property name="minimumSize">
+   <size>
+    <width>400</width>
+    <height>80</height>
+   </size>
+  </property>
+  <property name="maximumSize">
+   <size>
+    <width>400</width>
+    <height>80</height>
+   </size>
+  </property>
+  <property name="windowTitle">
+   <string notr="true">Form</string>
+  </property>
+  <property name="styleSheet">
+   <string notr="true">QWidget { 
+    background-color: transparent; 
+    border: none; 
+    margin-left: 0px; 
+    margin-top: 0px; 
+    text-align: left;   
+    color: #ffffff; 
+}</string>
+  </property>
+  <widget class="QFrame" name="selectedFrame">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>0</y>
+     <width>80</width>
+     <height>80</height>
+    </rect>
+   </property>
+   <property name="minimumSize">
+    <size>
+     <width>80</width>
+     <height>80</height>
+    </size>
+   </property>
+   <property name="maximumSize">
+    <size>
+     <width>80</width>
+     <height>80</height>
+    </size>
+   </property>
+   <property name="lineWidth">
+    <number>4</number>
+   </property>
+   <widget class="QLabel" name="thumbnailLabel">
+    <property name="geometry">
+     <rect>
+      <x>10</x>
+      <y>18</y>
+      <width>60</width>
+      <height>44</height>
+     </rect>
+    </property>
+    <property name="sizePolicy">
+     <sizepolicy hsizetype="Maximum" vsizetype="Maximum">
+      <horstretch>0</horstretch>
+      <verstretch>0</verstretch>
+     </sizepolicy>
+    </property>
+    <property name="minimumSize">
+     <size>
+      <width>60</width>
+      <height>44</height>
+     </size>
+    </property>
+    <property name="text">
+     <string/>
+    </property>
+    <property name="alignment">
+     <set>Qt::AlignCenter</set>
+    </property>
+   </widget>
+   <widget class="QLabel" name="selectedLabel">
+    <property name="geometry">
+     <rect>
+      <x>0</x>
+      <y>0</y>
+      <width>80</width>
+      <height>80</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">QLabel {
+    image: url(:/Resources/production/icon-arrange-by-selected.png);
+   	image-position: right bottom;
+ }
+
+</string>
+    </property>
+    <property name="text">
+     <string/>
+    </property>
+   </widget>
+  </widget>
+  <widget class="QLineEdit" name="projectName">
+   <property name="geometry">
+    <rect>
+     <x>80</x>
+     <y>3</y>
+     <width>272</width>
+     <height>74</height>
+    </rect>
+   </property>
+   <property name="focusPolicy">
+    <enum>Qt::ClickFocus</enum>
+   </property>
+   <property name="contextMenuPolicy">
+    <enum>Qt::NoContextMenu</enum>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">background-color: transparent;
+font-family: Segoe UI;
+font-size: 20px;
+font-weight: normal;
+font-style: normal;
+color: #fffffe;
+margin: 20px 8px;
+margin-right: 0px;
+border: 2 solid transparent;</string>
+   </property>
+   <property name="text">
+    <string notr="true"/>
+   </property>
+   <property name="readOnly">
+    <bool>true</bool>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="deleteButton">
+   <property name="geometry">
+    <rect>
+     <x>352</x>
+     <y>0</y>
+     <width>48</width>
+     <height>80</height>
+    </rect>
+   </property>
+   <property name="minimumSize">
+    <size>
+     <width>48</width>
+     <height>80</height>
+    </size>
+   </property>
+   <property name="sizeIncrement">
+    <size>
+     <width>48</width>
+     <height>0</height>
+    </size>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">QPushButton {
+    image: url(:/Resources/production/icon-deleteitem-norm.png);
+    background-color: transparent;
+    border: none;
+}
+
+QPushButton:hover {
+    image: url(:/Resources/production/icon-deleteitem-hover.png);
+ }
+
+QPushButton:disabled {
+     image: url(:/Resources/production/icon-deleteitem-disable.png);
+}
+
+QPushButton:pressed {
+    image:  url(:/Resources/production/icon-deleteitem-press.png);
+}</string>
+   </property>
+   <property name="text">
+    <string/>
+   </property>
+  </widget>
+ </widget>
+ <resources/>
+ <connections/>
+ <slots>
+  <slot>onProjectNameTextChanged()</slot>
+ </slots>
+</ui>

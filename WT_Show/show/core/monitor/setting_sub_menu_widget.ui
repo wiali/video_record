@@ -1,0 +1,231 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>SettingSubMenuWidget</class>
+ <widget class="QWidget" name="SettingSubMenuWidget">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>311</width>
+    <height>320</height>
+   </rect>
+  </property>
+  <property name="minimumSize">
+   <size>
+    <width>0</width>
+    <height>180</height>
+   </size>
+  </property>
+  <property name="maximumSize">
+   <size>
+    <width>340</width>
+    <height>320</height>
+   </size>
+  </property>
+  <property name="windowTitle">
+   <string notr="true">Form</string>
+  </property>
+  <layout class="QGridLayout" name="gridLayout">
+   <property name="leftMargin">
+    <number>0</number>
+   </property>
+   <property name="topMargin">
+    <number>0</number>
+   </property>
+   <property name="rightMargin">
+    <number>0</number>
+   </property>
+   <property name="bottomMargin">
+    <number>0</number>
+   </property>
+   <property name="spacing">
+    <number>0</number>
+   </property>
+   <item row="0" column="0">
+    <widget class="QFrame" name="frame_content">
+     <property name="styleSheet">
+      <string notr="true">background-color: transparent;
+border: none;</string>
+     </property>
+     <property name="frameShape">
+      <enum>QFrame::StyledPanel</enum>
+     </property>
+     <property name="frameShadow">
+      <enum>QFrame::Raised</enum>
+     </property>
+     <widget class="QLabel" name="setting_label">
+      <property name="geometry">
+       <rect>
+        <x>32</x>
+        <y>20</y>
+        <width>270</width>
+        <height>30</height>
+       </rect>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">QLabel {
+  font-weight: normal;
+  font-family: Segoe UI;
+  font-size: 20px;
+  color: #ffffff;
+  background-color:transparent;
+}</string>
+      </property>
+      <property name="text">
+       <string>Settings</string>
+      </property>
+     </widget>
+     <widget class="QLabel" name="countdown_timer_label">
+      <property name="geometry">
+       <rect>
+        <x>32</x>
+        <y>70</y>
+        <width>170</width>
+        <height>30</height>
+       </rect>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">QLabel {
+  font-family: Segoe UI;
+  font-size: 15px;
+  font-weight: normal;
+  color: #ffffff;
+  background-color:transparent;
+}
+</string>
+      </property>
+      <property name="text">
+       <string>Countdown timer</string>
+      </property>
+     </widget>
+     <widget class="QLabel" name="pip_label">
+      <property name="geometry">
+       <rect>
+        <x>32</x>
+        <y>120</y>
+        <width>170</width>
+        <height>30</height>
+       </rect>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">QLabel {
+  font-family: Segoe UI;
+  font-size: 15px;
+  font-weight: normal;
+  color: #ffffff;
+  background-color:transparent;
+}
+</string>
+      </property>
+      <property name="text">
+       <string>Picture-in-picture</string>
+      </property>
+     </widget>
+     <widget class="QPushButton" name="colorCalibrationButton">
+      <property name="geometry">
+       <rect>
+        <x>19</x>
+        <y>192</y>
+        <width>271</width>
+        <height>41</height>
+       </rect>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">QPushButton {
+    font-family: Segoe UI;
+    font-size: 13px;
+    background-color: #0096d6;
+    border-width: 2px;
+    border-radius: 3px;
+    border-color: #0096d6;
+    color: #e7e7e7;
+    padding: 8px 60px ;
+}
+
+QPushButton:hover {
+    background-color: #2ea8dd;
+    border-color: #2ea8dd;
+    color: #ffffff;
+}
+
+QPushButton:pressed {
+    background-color: #007aaf;
+    border-color: #007aaf;
+    color: #ffffff;
+}
+
+QPushButton:focus {
+    background-color: #0096d6;
+    border-color: rgba(255, 255, 255, 0.5);
+    color: #ffffff;
+}
+
+QPushButton:disabled {
+    background-color: #2F3438;
+    border-color: rgba(255, 255, 255, 0.5);
+    color: #64686C;
+}</string>
+      </property>
+      <property name="text">
+       <string>Color calibration</string>
+      </property>
+     </widget>
+     <widget class="QPushButton" name="keystoneCalibrationButton">
+      <property name="enabled">
+       <bool>true</bool>
+      </property>
+      <property name="geometry">
+       <rect>
+        <x>19</x>
+        <y>250</y>
+        <width>271</width>
+        <height>41</height>
+       </rect>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">QPushButton {
+    font-family: Segoe UI;
+    font-size: 13px;
+    background-color: #0096d6;
+    border-width: 2px;
+    border-radius: 3px;
+    border-color: #0096d6;
+    color: #e7e7e7;
+    padding: 8px 60px ;
+}
+
+QPushButton:hover {
+    background-color: #2ea8dd;
+    border-color: #2ea8dd;
+    color: #ffffff;
+}
+
+QPushButton:pressed {
+    background-color: #007aaf;
+    border-color: #007aaf;
+    color: #ffffff;
+}
+
+QPushButton:focus {
+    background-color: #0096d6;
+    border-color: rgba(255, 255, 255, 0.5);
+    color: #ffffff;
+}
+
+QPushButton:disabled {
+    background-color: #2F3438;
+    border-color: rgba(255, 255, 255, 0.5);
+    color: #64686C;
+}</string>
+      </property>
+      <property name="text">
+       <string>Keystone calibration</string>
+      </property>
+     </widget>
+    </widget>
+   </item>
+  </layout>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>

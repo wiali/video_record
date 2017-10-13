@@ -1,0 +1,325 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>MonitorWindow</class>
+ <widget class="QMainWindow" name="MonitorWindow">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>1634</width>
+    <height>982</height>
+   </rect>
+  </property>
+  <property name="sizePolicy">
+   <sizepolicy hsizetype="Ignored" vsizetype="Expanding">
+    <horstretch>0</horstretch>
+    <verstretch>0</verstretch>
+   </sizepolicy>
+  </property>
+  <property name="minimumSize">
+   <size>
+    <width>1634</width>
+    <height>982</height>
+   </size>
+  </property>
+  <property name="focusPolicy">
+   <enum>Qt::StrongFocus</enum>
+  </property>
+  <property name="windowTitle">
+   <string>WorkTools Capture</string>
+  </property>
+  <property name="windowIcon">
+   <iconset resource="../capture.qrc">
+    <normaloff>:/Resources/production/camera.ico</normaloff>:/Resources/production/camera.ico</iconset>
+  </property>
+  <widget class="QWidget" name="top_widget">
+   <property name="layoutDirection">
+    <enum>Qt::LeftToRight</enum>
+   </property>
+   <widget class="QWidget" name="center_right_widget" native="true">
+    <property name="geometry">
+     <rect>
+      <x>81</x>
+      <y>0</y>
+      <width>951</width>
+      <height>731</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true"/>
+    </property>
+    <layout class="QGridLayout" name="gridLayout_2">
+     <property name="leftMargin">
+      <number>0</number>
+     </property>
+     <property name="topMargin">
+      <number>0</number>
+     </property>
+     <property name="rightMargin">
+      <number>0</number>
+     </property>
+     <property name="bottomMargin">
+      <number>0</number>
+     </property>
+     <property name="spacing">
+      <number>0</number>
+     </property>
+     <item row="0" column="0">
+      <widget class="QStackedWidget" name="centralAreaStackedWidget">
+       <property name="sizePolicy">
+        <sizepolicy hsizetype="MinimumExpanding" vsizetype="Preferred">
+         <horstretch>0</horstretch>
+         <verstretch>0</verstretch>
+        </sizepolicy>
+       </property>
+       <property name="focusPolicy">
+        <enum>Qt::NoFocus</enum>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">QStackedWidget {
+    background-color: #000000;
+}</string>
+       </property>
+       <property name="currentIndex">
+        <number>0</number>
+       </property>
+       <widget class="capture::common::VideoWidget" name="videoWidget">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Maximum" vsizetype="Maximum">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">QWidget {
+	background-color: black;
+}</string>
+        </property>
+               </widget>
+       <widget class="StageViewer" name="stageViewer">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Maximum" vsizetype="Maximum">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
+       </widget>
+       <widget class="capture::monitor::CameraInUseForm" name="cameraInUseWidget"/>
+       <widget class="capture::monitor::NoCalibrationDataForm" name="noCalibrationDataForm"/>
+       <widget class="capture::monitor::NoVideoSourcesAvailableForm" name="noVideoSourceWidget"/>
+       <widget class="capture::monitor::ColorCalibrationForm" name="colorCalibrationForm"/>
+      </widget>
+     </item>
+    </layout>
+   </widget>
+   <widget class="capture::monitor::CameraLeftMenuForm" name="left_menu" native="true">
+    <property name="geometry">
+     <rect>
+      <x>0</x>
+      <y>0</y>
+      <width>80</width>
+      <height>704</height>
+     </rect>
+    </property>
+    <property name="minimumSize">
+     <size>
+      <width>80</width>
+      <height>0</height>
+     </size>
+    </property>
+    <property name="maximumSize">
+     <size>
+      <width>400</width>
+      <height>16777215</height>
+     </size>
+    </property>
+   </widget>
+   <widget class="capture::monitor::ZoomIndicatorForm" name="zoomIndicator" native="true">
+    <property name="geometry">
+     <rect>
+      <x>600</x>
+      <y>30</y>
+      <width>200</width>
+      <height>60</height>
+     </rect>
+    </property>
+    <property name="sizePolicy">
+     <sizepolicy hsizetype="Preferred" vsizetype="MinimumExpanding">
+      <horstretch>0</horstretch>
+      <verstretch>0</verstretch>
+     </sizepolicy>
+    </property>
+   </widget>
+   <widget class="capture::monitor::InvalidProjectNameWidget" name="invalidProjectNameWidget" native="true">
+    <property name="geometry">
+     <rect>
+      <x>0</x>
+      <y>100</y>
+      <width>400</width>
+      <height>80</height>
+     </rect>
+    </property>
+    <property name="sizePolicy">
+     <sizepolicy hsizetype="Preferred" vsizetype="MinimumExpanding">
+      <horstretch>0</horstretch>
+      <verstretch>0</verstretch>
+     </sizepolicy>
+    </property>
+   </widget>
+   <widget class="capture::monitor::CameraRightMenuForm" name="right_menu" native="true">
+    <property name="geometry">
+     <rect>
+      <x>1052</x>
+      <y>0</y>
+      <width>80</width>
+      <height>731</height>
+     </rect>
+    </property>
+    <property name="minimumSize">
+     <size>
+      <width>80</width>
+      <height>0</height>
+     </size>
+    </property>
+    <property name="maximumSize">
+     <size>
+      <width>240</width>
+      <height>16777215</height>
+     </size>
+    </property>
+    <property name="baseSize">
+     <size>
+      <width>80</width>
+      <height>0</height>
+     </size>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">background-color: rgba(29, 34, 39, 180);</string>
+    </property>
+   </widget>
+   <widget class="capture::monitor::ClipboardExportFinishedNotification" name="clipboardExportFinishedNotificationWidget" native="true">
+    <property name="geometry">
+     <rect>
+      <x>210</x>
+      <y>760</y>
+      <width>120</width>
+      <height>80</height>
+     </rect>
+    </property>
+   </widget>
+   <widget class="capture::monitor::PresentationMonitorNotification" name="presentationMonitorNotificationWidget" native="true">
+    <property name="geometry">
+     <rect>
+      <x>20</x>
+      <y>750</y>
+      <width>260</width>
+      <height>60</height>
+     </rect>
+    </property>
+   </widget>
+<widget class="capture::monitor::KeystoneCornerIndicatorWidget" name="keystoneCornersIndicatorWidget" native="true">
+         <property name="geometry">
+          <rect>
+           <x>0</x>
+           <y>0</y>
+           <width>120</width>
+           <height>80</height>
+          </rect>
+         </property>
+        </widget>
+
+   <zorder>center_right_widget</zorder>
+   <zorder>left_menu</zorder>
+   <zorder>zoomIndicator</zorder>
+   <zorder>right_menu</zorder>
+   <zorder>clipboardExportFinishedNotificationWidget</zorder>
+   <zorder>invalidProjectNameWidget</zorder>
+   <zorder>presentationMonitorNotificationWidget</zorder>   
+  </widget>
+ </widget>
+ <layoutdefault spacing="6" margin="11"/>
+ <customwidgets>
+  <customwidget>
+   <class>capture::monitor::CameraLeftMenuForm</class>
+   <extends>QWidget</extends>
+   <header>camera_left_menu_form.h</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>capture::monitor::CameraRightMenuForm</class>
+   <extends>QWidget</extends>
+   <header>camera_right_menu_form.h</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>capture::monitor::CameraInUseForm</class>
+   <extends>QWidget</extends>
+   <header>monitor/camera_in_use_form.h</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>StageViewer</class>
+   <extends>QOpenGLWidget</extends>
+   <header location="global">stage_viewer.h</header>
+  </customwidget>
+  <customwidget>
+   <class>capture::monitor::NoCalibrationDataForm</class>
+   <extends>QWidget</extends>
+   <header>monitor/no_calibration_data_form.h</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>capture::monitor::ZoomIndicatorForm</class>
+   <extends>QWidget</extends>
+   <header>monitor/zoom_indicator_form.h</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>capture::monitor::ClipboardExportFinishedNotification</class>
+   <extends>QWidget</extends>
+   <header>monitor/clipboard_export_finished_notification.h</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>capture::monitor::InvalidProjectNameWidget</class>
+   <extends>QWidget</extends>
+   <header>monitor/invalid_project_name_widget.h</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>capture::monitor::PresentationMonitorNotification</class>
+   <extends>QWidget</extends>
+   <header>monitor/presentation_monitor_notification.h</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>capture::common::VideoWidget</class>
+   <extends>QOpenGLWidget</extends>
+   <header>common/video_widget.h</header>
+  </customwidget>
+  <customwidget>
+   <class>capture::monitor::NoVideoSourcesAvailableForm</class>
+   <extends>QWidget</extends>
+   <header>monitor/no_video_sources_available_form.h</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>capture::monitor::ColorCalibrationForm</class>
+   <extends>QWidget</extends>
+   <header>monitor\color_calibration_form.h</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>capture::monitor::KeystoneCornerIndicatorWidget</class>
+   <extends>QWidget</extends>
+   <header>monitor/keystone_corner_indicator_widget.h</header>
+   <container>1</container>
+  </customwidget>
+ </customwidgets>
+ <resources>
+  <include location="../capture.qrc"/>
+  <include location="../capture.qrc"/>
+  <include location="../capture.qrc"/>
+ </resources>
+ <connections/>
+</ui>

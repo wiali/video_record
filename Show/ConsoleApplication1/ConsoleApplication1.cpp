@@ -1,13 +1,17 @@
 ﻿#include "stdafx.h"
+#include <iostream>
 
 #include <opencv2/opencv.hpp>
 #include <opencv2/core.hpp>
 #include <opencv2/highgui.hpp>
 #include <opencv2/videoio.hpp> // for camera
 
+#include <opencv2/core/ocl.hpp>
+
 #include "opencv2/imgproc.hpp"
 #include <Windows.h>
 
+using namespace std;
 using namespace cv;
 
 Mat hwnd2mat(HWND hwnd)
@@ -63,6 +67,35 @@ Mat hwnd2mat(HWND hwnd)
 
 int main()
 {
+    if (!cv::ocl::haveOpenCL())
+    {
+        cout << "OpenCL is not avaiable..." << endl;
+        return 0;
+    }
+    cv::ocl::Context context;
+    if (!context.create(cv::ocl::Device::TYPE_GPU))
+    {
+        cout << "Failed creating the context..." << endl;
+        return 0;
+    }
+
+    // In OpenCV 3.0.0 beta, only a single device is detected.
+    cout << context.ndevices() << " GPU devices are detected." << endl;
+    for (int i = 0; i < context.ndevices(); i++)
+    {
+        cv::ocl::Device device = context.device(i);
+        cout << "name                 : " << device.name() << endl;
+        cout << "available            : " << device.available() << endl;
+        cout << "imageSupport         : " << device.imageSupport() << endl;
+        cout << "OpenCL_C_Version     : " << device.OpenCL_C_Version() << endl;
+        cout << endl;
+    }
+
+    // Select the first device
+    cv::ocl::Device(context.device(0));
+
+    cv::ocl::setUseOpenCL(true);
+
     VideoCapture cap1;
     VideoCapture cap2;
     //cap1.open(1);
@@ -83,8 +116,14 @@ int main()
     namedWindow("Video", 2);
     while (1)
     {
-        Mat frame1;
+        //Mat frame1;
+        UMat frame1;
+        //cv::cuda::GpuMat frame1;
+        double start_time = cv::getTickCount();
+        cout << "Start:" << start_time << endl;
         cap1 >> frame1;
+        cout << "End:" << double(cv::getTickCount()) << endl;
+        //cout << getTickCount() - start_time <<endl;
         int nHeight = frame1.rows;
         int nWidth = frame1.cols;
         //resize(image, image, Size(640, 360), 0, 0, INTER_CUBIC);
@@ -92,7 +131,7 @@ int main()
         imshow("Video1", frame1);
         waitKey(1);
 
-        Mat frame2;
+        UMat frame2;
         cap2 >> frame2;
         imshow("Video2", frame2);
         waitKey(1);

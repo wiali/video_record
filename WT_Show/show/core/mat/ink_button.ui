@@ -1,0 +1,259 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>InkButton</class>
+ <widget class="QWidget" name="InkButton">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>64</width>
+    <height>320</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string notr="true">Form</string>
+  </property>
+  <property name="styleSheet">
+   <string notr="true"/>
+  </property>
+  <layout class="QVBoxLayout" name="verticalLayout">
+   <property name="spacing">
+    <number>0</number>
+   </property>
+   <property name="leftMargin">
+    <number>0</number>
+   </property>
+   <property name="topMargin">
+    <number>0</number>
+   </property>
+   <property name="rightMargin">
+    <number>0</number>
+   </property>
+   <property name="bottomMargin">
+    <number>0</number>
+   </property>
+   <item>
+    <widget class="QWidget" name="content" native="true">
+     <property name="styleSheet">
+      <string notr="true">QWidget {
+    background-color: rgba(29, 34, 39,  200);
+    border-radius: 32px;
+}</string>
+     </property>
+     <widget class="QPushButton" name="brush">
+      <property name="geometry">
+       <rect>
+        <x>0</x>
+        <y>128</y>
+        <width>64</width>
+        <height>64</height>
+       </rect>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">QPushButton {
+   background-color: transparent;
+   border: none;
+   image: url(:/Resources/production/icon-brush-norm.png);
+   image-position: center center
+}
+
+QPushButton:hover {
+   image: url(:/Resources/production/icon-brush-hover.png);
+}
+
+QPushButton:pressed {
+   image: url(:/Resources/production/icon-brush-press.png);
+}
+
+QPushButton:disabled {
+   image: url(:/Resources/production/icon-brush-disable.png);
+}
+
+QPushButton:checked {
+   image: url(:/Resources/production/icon-brush-press.png);
+}
+</string>
+      </property>
+      <property name="text">
+       <string/>
+      </property>
+      <property name="checkable">
+       <bool>true</bool>
+      </property>
+     </widget>
+     <widget class="QPushButton" name="ink">
+      <property name="geometry">
+       <rect>
+        <x>0</x>
+        <y>0</y>
+        <width>64</width>
+        <height>64</height>
+       </rect>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">QPushButton {
+   background-color: transparent;
+   border: none;
+   image: url(:/Resources/production/icon-ink-norm.png);
+   image-position: center center;
+   border-top-left-radius: 32px;
+   border-top-right-radius: 32px;
+}
+
+QPushButton:hover {
+   image: url(:/Resources/production/icon-ink-hover.png);
+}
+
+QPushButton:pressed {
+   image: url(:/Resources/production/icon-ink-press.png);
+}
+
+QPushButton:disabled {
+   image: url(:/Resources/production/icon-ink-disable.png);
+}
+
+QPushButton:checked {
+   image: url(:/Resources/production/icon-ink-press.png);
+}
+</string>
+      </property>
+      <property name="text">
+       <string/>
+      </property>
+      <property name="checkable">
+       <bool>true</bool>
+      </property>
+      <property name="checked">
+       <bool>false</bool>
+      </property>
+     </widget>
+     <widget class="QPushButton" name="eraser">
+      <property name="geometry">
+       <rect>
+        <x>0</x>
+        <y>192</y>
+        <width>64</width>
+        <height>64</height>
+       </rect>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">QPushButton {
+   background-color: transparent;
+   border: none;
+   image: url(:/Resources/production/icon-eraser-norm.png);
+   image-position: center center
+}
+
+QPushButton:hover {
+   image: url(:/Resources/production/icon-eraser-hover.png);
+}
+
+QPushButton:pressed {
+   image: url(:/Resources/production/icon-eraser-press.png);
+}
+
+QPushButton:disabled {
+   image: url(:/Resources/production/icon-eraser-disable.png);
+}
+
+QPushButton:checked {
+   image: url(:/Resources/production/icon-eraser-press.png);
+}
+</string>
+      </property>
+      <property name="text">
+       <string/>
+      </property>
+      <property name="checkable">
+       <bool>true</bool>
+      </property>
+     </widget>
+     <widget class="QPushButton" name="handon">
+      <property name="geometry">
+       <rect>
+        <x>0</x>
+        <y>64</y>
+        <width>64</width>
+        <height>64</height>
+       </rect>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">QPushButton {
+   background-color: transparent;
+   border: none;
+   image: url(:/Resources/production/icon-handon-norm.png);
+   image-position: center center
+}
+
+QPushButton:hover {
+   image: url(:/Resources/production/icon-handon-hover.png);
+}
+
+QPushButton:pressed {
+   image: url(:/Resources/production/icon-handon-press.png);
+}
+
+QPushButton:disabled {
+   image: url(:/Resources/production/icon-handon-disable.png);
+}
+
+QPushButton:checked {
+   image: url(:/Resources/production/icon-handon-press.png);
+}
+</string>
+      </property>
+      <property name="text">
+       <string/>
+      </property>
+      <property name="checkable">
+       <bool>true</bool>
+      </property>
+     </widget>
+     <widget class="QWidget" name="line" native="true">
+      <property name="geometry">
+       <rect>
+        <x>3</x>
+        <y>64</y>
+        <width>58</width>
+        <height>2</height>
+       </rect>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">QWidget {
+    background-color: #6f757c;
+}</string>
+      </property>
+     </widget>
+     <widget class="capture::mat::ColorButton" name="color" native="true">
+      <property name="geometry">
+       <rect>
+        <x>0</x>
+        <y>256</y>
+        <width>64</width>
+        <height>64</height>
+       </rect>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">QWidget {
+    background-color: transparent;
+    border-radius: 0px;
+    border-bottom-left-radius: 32px;
+    border-bottom-right-radius: 32px;
+}</string>
+      </property>
+     </widget>
+    </widget>
+   </item>
+  </layout>
+ </widget>
+ <customwidgets>
+  <customwidget>
+   <class>capture::mat::ColorButton</class>
+   <extends>QWidget</extends>
+   <header>color_button.h</header>
+   <container>1</container>
+  </customwidget>
+ </customwidgets>
+ <resources/>
+ <connections/>
+</ui>

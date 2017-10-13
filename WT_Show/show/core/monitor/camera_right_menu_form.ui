@@ -1,0 +1,442 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>CameraRightMenuForm</class>
+ <widget class="QWidget" name="CameraRightMenuForm">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>400</width>
+    <height>988</height>
+   </rect>
+  </property>
+  <property name="minimumSize">
+   <size>
+    <width>80</width>
+    <height>0</height>
+   </size>
+  </property>
+  <property name="maximumSize">
+   <size>
+    <width>400</width>
+    <height>16777215</height>
+   </size>
+  </property>
+  <property name="windowTitle">
+   <string notr="true">Form</string>
+  </property>
+  <property name="styleSheet">
+   <string notr="true">background-color: #2d3338;</string>
+  </property>
+  <widget class="capture::monitor::CaptureButton" name="captureButton" native="true">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>700</y>
+     <width>240</width>
+     <height>80</height>
+    </rect>
+   </property>
+   <property name="minimumSize">
+    <size>
+     <width>240</width>
+     <height>80</height>
+    </size>
+   </property>
+   <property name="maximumSize">
+    <size>
+     <width>240</width>
+     <height>80</height>
+    </size>
+   </property>
+  </widget>
+  <widget class="capture::monitor::FlashModeToggleButton" name="flashModeToggleButton" native="true">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>290</y>
+     <width>240</width>
+     <height>64</height>
+    </rect>
+   </property>
+   <property name="minimumSize">
+    <size>
+     <width>240</width>
+     <height>64</height>
+    </size>
+   </property>
+   <property name="maximumSize">
+    <size>
+     <width>240</width>
+     <height>64</height>
+    </size>
+   </property>
+  </widget>
+  <widget class="capture::monitor::CaptureModeWidget" name="captureModeWidget" native="true">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>640</y>
+     <width>240</width>
+     <height>80</height>
+    </rect>
+   </property>
+   <property name="minimumSize">
+    <size>
+     <width>240</width>
+     <height>80</height>
+    </size>
+   </property>
+  </widget>
+  <widget class="capture::monitor::HelpWidget" name="helpButton" native="true">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>20</y>
+     <width>240</width>
+     <height>64</height>
+    </rect>
+   </property>
+   <zorder>acceptKeystoneCalibrationButton</zorder>
+  </widget>
+  <widget class="EditButton" name="editButton" native="true">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>550</y>
+     <width>400</width>
+     <height>64</height>
+    </rect>
+   </property>
+   <property name="sizePolicy">
+    <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+     <horstretch>0</horstretch>
+     <verstretch>0</verstretch>
+    </sizepolicy>
+   </property>
+   <property name="minimumSize">
+    <size>
+     <width>240</width>
+     <height>64</height>
+    </size>
+   </property>
+   <property name="maximumSize">
+    <size>
+     <width>400</width>
+     <height>64</height>
+    </size>
+   </property>
+   <zorder>widget_2</zorder>
+  </widget>
+  <widget class="capture::monitor::CameraButton" name="downwardFacingCameraButton" native="true">
+   <property name="geometry">
+    <rect>
+     <x>240</x>
+     <y>190</y>
+     <width>240</width>
+     <height>80</height>
+    </rect>
+   </property>
+   <zorder>widget_2</zorder>
+  </widget>
+  <widget class="capture::monitor::CopyToClipboardWidget" name="copyToClipboardWidget" native="true">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>470</y>
+     <width>391</width>
+     <height>64</height>
+    </rect>
+   </property>
+  </widget>
+  <widget class="capture::monitor::SendToStageWidget" name="sendToStageWidget" native="true">
+   <property name="geometry">
+    <rect>
+     <x>50</x>
+     <y>570</y>
+     <width>120</width>
+     <height>64</height>
+    </rect>
+   </property>
+  </widget>
+  <widget class="capture::monitor::DeleteProjectWidget" name="deleteProjectWidget" native="true">
+   <property name="geometry">
+    <rect>
+     <x>60</x>
+     <y>190</y>
+     <width>120</width>
+     <height>64</height>
+    </rect>
+   </property>
+  </widget>
+  <widget class="capture::monitor::SaveProjectToImageWidget" name="saveProjectToImageWidget" native="true">
+   <property name="geometry">
+    <rect>
+     <x>50</x>
+     <y>100</y>
+     <width>120</width>
+     <height>64</height>
+    </rect>
+   </property>
+  </widget>
+  <widget class="capture::monitor::PresentationModeButton" name="presentationModeButton" native="true">
+   <property name="geometry">
+    <rect>
+     <x>230</x>
+     <y>100</y>
+     <width>240</width>
+     <height>64</height>
+    </rect>
+   </property>
+  </widget>
+  <widget class="capture::monitor::UndoWidget" name="undoWidget" native="true">
+   <property name="geometry">
+    <rect>
+     <x>270</x>
+     <y>670</y>
+     <width>120</width>
+     <height>64</height>
+    </rect>
+   </property>
+   <zorder>redoWidget</zorder>
+   <zorder>redoWidget</zorder>
+  </widget>
+  <widget class="capture::monitor::RedoWidget" name="redoWidget" native="true">
+   <property name="geometry">
+    <rect>
+     <x>200</x>
+     <y>550</y>
+     <width>120</width>
+     <height>64</height>
+    </rect>
+   </property>
+  </widget>
+  <widget class="capture::monitor::ColorCorrectionToggleButton" name="colorCorrectionToggleButton" native="true">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>780</y>
+     <width>240</width>
+     <height>64</height>
+    </rect>
+   </property>
+   <property name="minimumSize">
+    <size>
+     <width>240</width>
+     <height>64</height>
+    </size>
+   </property>
+   <property name="maximumSize">
+    <size>
+     <width>240</width>
+     <height>64</height>
+    </size>
+   </property>
+  </widget>
+  <widget class="capture::monitor::ForwardFacingCameraButton" name="forwardFacingCameraButton" native="true">
+   <property name="geometry">
+    <rect>
+     <x>250</x>
+     <y>280</y>
+     <width>151</width>
+     <height>80</height>
+    </rect>
+   </property>
+  </widget>
+  <widget class="capture::monitor::CameraButton" name="primaryDesktopButton" native="true">
+   <property name="geometry">
+    <rect>
+     <x>250</x>
+     <y>370</y>
+     <width>120</width>
+     <height>80</height>
+    </rect>
+   </property>
+   <zorder>widget_2</zorder>
+  </widget>
+  <widget class="capture::monitor::CameraButton" name="matDesktopButton" native="true">
+   <property name="geometry">
+    <rect>
+     <x>260</x>
+     <y>450</y>
+     <width>120</width>
+     <height>80</height>
+    </rect>
+   </property>
+   <zorder>widget_2</zorder>
+  </widget>
+  <widget class="capture::monitor::KeystoneCorrectionModeButton" name="keystoneCorrectionModeButton" native="true">
+   <property name="geometry">
+    <rect>
+     <x>270</x>
+     <y>890</y>
+     <width>240</width>
+     <height>64</height>
+    </rect>
+   </property>
+   <property name="minimumSize">
+    <size>
+     <width>240</width>
+     <height>64</height>
+    </size>
+   </property>
+   <zorder>redoWidget</zorder>
+  </widget>
+  <widget class="capture::monitor::AcceptKeystoneCalibrationButton" name="acceptKeystoneCalibrationButton" native="true">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>250</y>
+     <width>240</width>
+     <height>64</height>
+    </rect>
+   </property>
+   <property name="minimumSize">
+    <size>
+     <width>240</width>
+     <height>64</height>
+    </size>
+   </property>
+   <property name="maximumSize">
+    <size>
+     <width>400</width>
+     <height>64</height>
+    </size>
+   </property>
+  </widget>
+  <widget class="capture::monitor::RejectKeystoneCalibrationButton" name="rejectKeystoneCalibrationButton" native="true">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>360</y>
+     <width>240</width>
+     <height>64</height>
+    </rect>
+   </property>
+   <property name="minimumSize">
+    <size>
+     <width>240</width>
+     <height>64</height>
+    </size>
+   </property>
+   <property name="maximumSize">
+    <size>
+     <width>400</width>
+     <height>64</height>
+    </size>
+   </property>
+  </widget>
+ </widget>
+ <customwidgets>
+  <customwidget>
+   <class>EditButton</class>
+   <extends>QWidget</extends>
+   <header>edit_button.h</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>capture::monitor::FlashModeToggleButton</class>
+   <extends>QWidget</extends>
+   <header>monitor/flash_mode_toggle_button.h</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>capture::monitor::CaptureButton</class>
+   <extends>QWidget</extends>
+   <header>monitor/capture_button.h</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>capture::monitor::CaptureModeWidget</class>
+   <extends>QWidget</extends>
+   <header>monitor/capture_mode_widget.h</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>capture::monitor::HelpWidget</class>
+   <extends>QWidget</extends>
+   <header>monitor/help_widget.h</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>capture::monitor::CopyToClipboardWidget</class>
+   <extends>QWidget</extends>
+   <header>monitor/copy_to_clipboard_widget.h</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>capture::monitor::SendToStageWidget</class>
+   <extends>QWidget</extends>
+   <header>monitor/send_to_stage_widget.h</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>capture::monitor::DeleteProjectWidget</class>
+   <extends>QWidget</extends>
+   <header>monitor/delete_project_widget.h</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>capture::monitor::SaveProjectToImageWidget</class>
+   <extends>QWidget</extends>
+   <header>monitor/save_project_to_image_widget.h</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>capture::monitor::PresentationModeButton</class>
+   <extends>QWidget</extends>
+   <header>monitor/presentation_mode_button.h</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>capture::monitor::RedoWidget</class>
+   <extends>QWidget</extends>
+   <header>monitor/redo_widget.h</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>capture::monitor::UndoWidget</class>
+   <extends>QWidget</extends>
+   <header>monitor/undo_widget.h</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>capture::monitor::ColorCorrectionToggleButton</class>
+   <extends>QWidget</extends>
+   <header>monitor/color_correction_toggle_button.h</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>capture::monitor::CameraButton</class>
+   <extends>QWidget</extends>
+   <header>monitor/camera_button.h</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>capture::monitor::ForwardFacingCameraButton</class>
+   <extends>QWidget</extends>
+   <header>monitor/forward_facing_camera_button.h</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>capture::monitor::KeystoneCorrectionModeButton</class>
+   <extends>QWidget</extends>
+   <header>monitor/keystone_correction_mode_button.h</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>capture::monitor::AcceptKeystoneCalibrationButton</class>
+   <extends>QWidget</extends>
+   <header>monitor/accept_keystone_calibration_button.h</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>capture::monitor::RejectKeystoneCalibrationButton</class>
+   <extends>QWidget</extends>
+   <header>monitor/reject_keystone_calibration_button.h</header>
+   <container>1</container>
+  </customwidget>
+ </customwidgets>
+ <resources/>
+ <connections/>
+</ui>

@@ -1,0 +1,18 @@
+<RCC>
+    <qresource prefix="/">
+        <file>Resources/production/icon-left_open_close-disable.png</file>
+        <file>Resources/production/icon-left_open_close-hover.png</file>
+        <file>Resources/production/icon-left_open_close-norm.png</file>
+        <file>Resources/production/icon-left_open_close-press.png</file>
+        <file>Resources/production/icon-right_open_close-disable.png</file>
+        <file>Resources/production/icon-right_open_close-hover.png</file>
+        <file>Resources/production/icon-right_open_close-norm.png</file>
+        <file>Resources/production/icon-right_open_close-press.png</file>
+        <file>Resources/shaders/brightnessContrast.frag</file>
+        <file>Resources/shaders/vertexshader.vert</file>
+        <file>Resources/production/icon-setting-disable.png</file>
+        <file>Resources/production/icon-setting-hover.png</file>
+        <file>Resources/production/icon-setting-norm.png</file>
+        <file>Resources/production/icon-setting-press.png</file>
+    </qresource>
+</RCC>

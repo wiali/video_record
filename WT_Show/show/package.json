@@ -1,0 +1,29 @@
+{
+    "name": "capture",
+    "description": "WorkTools Capture",
+    "version": "2.4.0",
+    "type": "app",
+    "product": "WorkTools",
+    "author": "HP Inc.",
+    "copyright": "\\251 Copyright 2017 Hewlett-Packard Development Company, L.P.",
+    "publish": {
+        "bin": {
+            "<spec>": "**/<spec>/*"
+        }
+    },
+    "devDependencies": {
+        "proapi": "~2.10.0",
+        "logger": "~2.0.3",
+        "settings": "~2.0.1",
+        "video_source": "~4.3.0",
+        "image_enhancement": "~1.6.0",
+        "image_filters": "~2.2.0",
+        "segmentation": "~2.2.0",
+        "user_event_handler": "~3.10.0",
+        "opencv": "~3.1.1",
+        "quazip": "~0.7.13",
+        "metrics": "~3.3.0",
+        "hardware_info": "~1.0.2",
+        "ocr": "~1.0.1"
+    }
+}
