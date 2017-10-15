@@ -25,3 +25,7 @@ http://answers.opencv.org/question/58331/opencv-300-and-opencl-benchmark-sobel-e
 http://answers.opencv.org/question/63452/opencv-30-the-performance-of-umat/
 
 https://github.com/lheric/libgitlmvc
+
+http://blog.csdn.net/taiyang1987912/article/details/38681969
+
+http://blog.csdn.net/imxiangzi/article/details/50989679
