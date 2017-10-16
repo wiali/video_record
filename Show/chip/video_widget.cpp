@@ -39,8 +39,8 @@ ProjGen2="{'height':1280,'width':1920}"
 VideoWidget::VideoWidget(QWidget* parent)
     : QOpenGLWidget(parent)
 {
-    setAutoFillBackground(false);
-    setAttribute(Qt::WA_NoSystemBackground, true);
+//    setAutoFillBackground(false);
+//    setAttribute(Qt::WA_NoSystemBackground, true);
 
     grabGesture(Qt::PanGesture);
     grabGesture(Qt::PinchGesture);
@@ -50,21 +50,21 @@ VideoWidget::VideoWidget(QWidget* parent)
     setPalette(palette);
 }
 
-void VideoWidget::initializeGL()
-{
-    initializeOpenGLFunctions();
+//void VideoWidget::initializeGL()
+//{
+//    initializeOpenGLFunctions();
 
-    makeCurrent();
+//    makeCurrent();
 
-    // fix vertical sync issue as found by Randy in NVIDIA forum
-    QSurfaceFormat format;
-    format.setSwapInterval(0);
-    QSurfaceFormat::setDefaultFormat(format);
+//    // fix vertical sync issue as found by Randy in NVIDIA forum
+//    QSurfaceFormat format;
+//    format.setSwapInterval(0);
+//    QSurfaceFormat::setDefaultFormat(format);
 
-    glShadeModel(GL_SMOOTH);
+//    glShadeModel(GL_SMOOTH);
 
-    doneCurrent();
-}
+//    doneCurrent();
+//}
 
 void VideoWidget::resizeGL(int width, int height)
 {
@@ -87,7 +87,7 @@ void VideoWidget::paintGL()
 
     if (m_frameBuffers.contains(context))
     {
-        uchar* sourceImageData;
+        uchar* sourceImageData = new uchar[4416*3312];
         QSize imageSize(4416, 3312);
         convert(sourceImageData, imageSize, m_frameBuffers[context].data());
     }
@@ -133,7 +133,7 @@ QSharedPointer<CombinedFilterData> VideoWidget::combinedInit(const QSize& imageS
     data->imageSize = imageSize;
     data->pixelFormat = QOpenGLTexture::PixelFormat::BGR;//QImage::Format_RGB888;
 
-    data->filtersProgram = createAndCompileShaderProgram(":/shaders/filtersShader");
+    data->filtersProgram = createAndCompileShaderProgram(":/filtersShader");
 
     buildVertexBuffer(data);
 

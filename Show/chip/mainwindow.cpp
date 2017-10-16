@@ -41,6 +41,8 @@
 #include <QPushButton>
 #include <QToolButton>
 
+#include "video_widget.h"
+
 MainWindow::MainWindow(QWidget *parent)
     : QWidget(parent)
 {
@@ -151,5 +153,6 @@ void MainWindow::populateScene()
 
 void MainWindow::onPresentation()
 {
-
+    VideoWidget vw;
+    vw.show();
 }

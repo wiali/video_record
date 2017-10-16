@@ -7,5 +7,7 @@
         <file>rotateright.png</file>
         <file>fileprint.png</file>
         <file>icon-present-press.png</file>
+        <file>filtersShader.frag</file>
+        <file>filtersShader.vert</file>
     </qresource>
 </RCC>
