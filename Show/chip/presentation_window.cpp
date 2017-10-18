@@ -61,17 +61,17 @@ PresentationWindow::PresentationWindow(QWidget *parent)
 
     populateScene();
 
-    View *view = new View("");
-    view->view()->setScene(scene);
+//    View *view = new View("");
+//    view->view()->setScene(scene);
 
-    view = new View("");
-    view->view()->setScene(scene);
+//    view = new View("");
+//    view->view()->setScene(scene);
 
-    view = new View("");
-    view->view()->setScene(scene);
+//    view = new View("");
+//    view->view()->setScene(scene);
 
-    view = new View("");
-    view->view()->setScene(scene);
+//    view = new View("");
+//    view->view()->setScene(scene);
 
     setWindowTitle(tr("Presentation"));
 }
@@ -84,7 +84,7 @@ void PresentationWindow::populateScene()
 
     // Populate scene
     QColor color(image.pixel(int(image.width()), int(image.height())));
-    QGraphicsItem *item = new Chip(color, 0, 0);
+    Chip *item = new Chip(color, 0, 0);
     item->setPos(QPointF(0, 0));
     scene->addItem(item);
 }
@@ -140,7 +140,7 @@ cv::Mat PresentationWindow::hwnd2mat(HWND hwnd)
     return src;
 }
 
-
+/*
 int main()
 {
     if (!cv::ocl::haveOpenCL())
@@ -222,3 +222,4 @@ int main()
     cap2.release();
     return 0;
 }
+*/

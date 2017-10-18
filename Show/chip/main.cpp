@@ -44,7 +44,7 @@ int main(int argc, char *argv[])
 
     MainWindow window;
     window.show();
-    window.move(1600,0);
+    //window.move(1600,0);
 
     return app.exec();
 }

@@ -40,13 +40,30 @@
 #include <QLabel>
 #include <QPushButton>
 #include <QToolButton>
+#include <QGraphicsLinearLayout>
+#include <QGraphicsGridLayout>
 
+#include "ui_mainwindow.h"
 #include "video_widget.h"
 #include "presentation_window.h"
 
 MainWindow::MainWindow(QWidget *parent)
-    : QWidget(parent)
+    : QMainWindow(parent)
+    , ui(new Ui::MainWindow)
 {
+
+//    QHBoxLayout *layout = new QHBoxLayout;
+//    layout->addWidget(toolBox);
+//    view = new QGraphicsView(scene);
+//    layout->addWidget(view);
+
+//    QWidget *widget = new QWidget;
+//    widget->setLayout(layout);
+
+//    setCentralWidget(widget);
+
+    ui->setupUi(this);
+
     setStyleSheet("QWidget {"
                   "font-family: Segoe UI;"
                   "font-size: 14px;"
@@ -58,98 +75,89 @@ MainWindow::MainWindow(QWidget *parent)
                   "background-color: #2d3338;"
                   "}");
 
-    populateScene();
-
-    v1Splitter = new QSplitter;
-    v2Splitter = new QSplitter;
-    v3Splitter = new QSplitter;
-    v4Splitter = new QSplitter;
-    v5Splitter = new QSplitter;
-
-    QSplitter *vSplitter = new QSplitter;
-    vSplitter->setOrientation(Qt::Vertical);
-    vSplitter->addWidget(v1Splitter);
-    vSplitter->addWidget(v2Splitter);
-    vSplitter->addWidget(v3Splitter);
-    vSplitter->addWidget(v4Splitter);
-    vSplitter->addWidget(v5Splitter);
-
-    View *view = new View("");
-    view->view()->setScene(scene);
-    QWidget* spaceWindow1 = new QWidget;
-    QVBoxLayout *labelLayout1 = new QVBoxLayout;
-    QLabel* label1 = new QLabel(tr("Monitor"));
-    label1->setAlignment(Qt::AlignHCenter);
-    labelLayout1->addWidget(view);
-    labelLayout1->addWidget(label1);
-    spaceWindow1->setLayout(labelLayout1);
-    vSplitter->addWidget(spaceWindow1);
-
-    view = new View("");
-    view->view()->setScene(scene);
-    QWidget* spaceWindow2 = new QWidget;
-    QVBoxLayout *labelLayout2 = new QVBoxLayout;
-    QLabel* label2 = new QLabel(tr("TouchMat"));
-    label2->setAlignment(Qt::AlignHCenter);
-    labelLayout2->addWidget(view);
-    labelLayout2->addWidget(label2);
-    spaceWindow2->setLayout(labelLayout2);
-    vSplitter->addWidget(spaceWindow2);
-
-    view = new View("");
-    view->view()->setScene(scene);
-    QWidget* spaceWindow3 = new QWidget;
-    QVBoxLayout *labelLayout3 = new QVBoxLayout;
-    QLabel* label3 = new QLabel(tr("Web Cam"));
-    label3->setAlignment(Qt::AlignHCenter);
-    labelLayout3->addWidget(view);
-    labelLayout3->addWidget(label3);
-    spaceWindow3->setLayout(labelLayout3);
-    vSplitter->addWidget(spaceWindow3);
-
-    view = new View("");
-    view->view()->setScene(scene);
-    QWidget* spaceWindow4 = new QWidget;
-    QVBoxLayout *labelLayout4 = new QVBoxLayout;
-    QLabel* label4 = new QLabel(tr("Down Cam"));
-    label4->setAlignment(Qt::AlignHCenter);
-    labelLayout4->addWidget(view);
-    labelLayout4->addWidget(label4);
-    spaceWindow4->setLayout(labelLayout4);
-    vSplitter->addWidget(spaceWindow4);
-
-    QWidget* spaceWindow5 = new QWidget;
-    QVBoxLayout *labelLayout5 = new QVBoxLayout;
-    QToolButton *buttonIcon = new QToolButton;
-    buttonIcon->setIcon(QPixmap(":/icon-present-press.png"));
-    QSize iconSize(100, 100);
-    buttonIcon->setIconSize(iconSize);
-    //buttonIcon->setStyleSheet("font-size: 34px; color: white; background: transparent; font-family: Segoe UI;");
-    labelLayout5->addWidget(buttonIcon);
-    spaceWindow5->setLayout(labelLayout5);
-    labelLayout5->setAlignment(Qt::AlignHCenter | Qt::AlignVCenter);
-    vSplitter->addWidget(spaceWindow5);
-
-    QHBoxLayout *layout = new QHBoxLayout;
-    layout->addWidget(vSplitter);
-    setLayout(layout);
-
-    connect(buttonIcon, SIGNAL(clicked()), this, SLOT(onPresentation()));
-
-    setWindowTitle(tr("WorkTools Show"));
-}
-
-void MainWindow::populateScene()
-{
     scene = new QGraphicsScene;
 
-    QImage image(":/qt4logo.png");
+    for(int i = 0; i < 4; i++)
+    {
+        QImage image(":/qt4logo.png");
+        QColor color(image.pixel(int(image.width()), int(image.height())));
+        Chip *item = new Chip(color, 0, 0);
 
-    // Populate scene
-    QColor color(image.pixel(int(image.width()), int(image.height())));
-    QGraphicsItem *item = new Chip(color, 0, 0);
-    item->setPos(QPointF(0, 0));
-    scene->addItem(item);
+        item->setPos(20, i*80+20);
+        scene->addItem(item);
+
+        QGraphicsTextItem* mTextItem = new QGraphicsTextItem("Monitor Screen");
+        mTextItem->setPos(20, i*80+20 +item->boundingRect().height());
+        scene->addItem(mTextItem);
+
+        QGraphicsRectItem* item_space = new QGraphicsRectItem(
+                    QRectF(20, i*80+20 +item->boundingRect().height() , item->boundingRect().width(), 40));
+        item_space->setBrush(QBrush(QColor(Qt::green)));
+        item_space->setOpacity(0.5);
+        scene->addItem(item_space);
+    }
+
+    ui->myGraphicsView->setScene(scene);
+
+//    QLabel* label1 = new QLabel(tr("Monitor"));
+//    label1->setAlignment(Qt::AlignHCenter);
+
+//    View *view = new View("");
+//    view->view()->setScene(scene);
+
+
+//    view = new View("");
+//    view->view()->setScene(scene);
+//    QWidget* spaceWindow2 = new QWidget;
+//    QVBoxLayout *labelLayout2 = new QVBoxLayout;
+//    QLabel* label2 = new QLabel(tr("TouchMat"));
+//    label2->setAlignment(Qt::AlignHCenter);
+//    labelLayout2->addWidget(view);
+//    labelLayout2->addWidget(label2);
+//    spaceWindow2->setLayout(labelLayout2);
+//    vSplitter->addWidget(spaceWindow2);
+
+//    view = new View("");
+//    view->view()->setScene(scene);
+//    QWidget* spaceWindow3 = new QWidget;
+//    QVBoxLayout *labelLayout3 = new QVBoxLayout;
+//    QLabel* label3 = new QLabel(tr("Web Cam"));
+//    label3->setAlignment(Qt::AlignHCenter);
+//    labelLayout3->addWidget(view);
+//    labelLayout3->addWidget(label3);
+//    spaceWindow3->setLayout(labelLayout3);
+//    vSplitter->addWidget(spaceWindow3);
+
+//    view = new View("");
+//    view->view()->setScene(scene);
+//    QWidget* spaceWindow4 = new QWidget;
+//    QVBoxLayout *labelLayout4 = new QVBoxLayout;
+//    QLabel* label4 = new QLabel(tr("Down Cam"));
+//    label4->setAlignment(Qt::AlignHCenter);
+//    labelLayout4->addWidget(view);
+//    labelLayout4->addWidget(label4);
+//    spaceWindow4->setLayout(labelLayout4);
+//    vSplitter->addWidget(spaceWindow4);
+
+//    QWidget* spaceWindow5 = new QWidget;
+//    QVBoxLayout *labelLayout5 = new QVBoxLayout;
+//    QToolButton *buttonIcon = new QToolButton;
+//    buttonIcon->setIcon(QPixmap(":/icon-present-press.png"));
+//    QSize iconSize(100, 100);
+//    buttonIcon->setIconSize(iconSize);
+//    //buttonIcon->setStyleSheet("font-size: 34px; color: white; background: transparent; font-family: Segoe UI;");
+//    labelLayout5->addWidget(buttonIcon);
+//    spaceWindow5->setLayout(labelLayout5);
+//    labelLayout5->setAlignment(Qt::AlignHCenter | Qt::AlignVCenter);
+//    vSplitter->addWidget(spaceWindow5);
+
+//    QHBoxLayout *layout = new QHBoxLayout;
+//    layout->addWidget(vSplitter);
+//    setLayout(layout);
+
+//    connect(buttonIcon, SIGNAL(clicked()), this, SLOT(onPresentation()));
+
+    setWindowTitle(tr("WorkTools Show"));
 }
 
 void MainWindow::onPresentation()
@@ -159,3 +167,9 @@ void MainWindow::onPresentation()
     PresentationWindow window;
     window.show();
 }
+
+MainWindow::~MainWindow()
+{
+    delete ui;
+}
+

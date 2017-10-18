@@ -31,63 +31,56 @@
 **
 ****************************************************************************/
 
-#ifndef VIEW_H
-#define VIEW_H
+#include "chip.h"
+#include "mainwindow.h"
+#include "view.h"
 
-#include <QFrame>
-#include <QGraphicsView>
+#include <QHBoxLayout>
+#include <QSplitter>
+#include <QLabel>
+#include <QPushButton>
+#include <QToolButton>
+#include <QGraphicsLinearLayout>
+#include <QGraphicsGridLayout>
 
-QT_BEGIN_NAMESPACE
-class QLabel;
-class QSlider;
-class QToolButton;
-class QCheckBox;
-QT_END_NAMESPACE
+#include "mygraphicsscene.h"
+#include <QGLWidget>
 
-class View;
-
-class MyGraphicsView : public QGraphicsView
+MainWindow::MainWindow(QWidget *parent)
+    : QMainWindow(parent)
 {
-    Q_OBJECT
-public:
-    explicit MyGraphicsView(QWidget *parent = Q_NULLPTR);
+    QHBoxLayout *layout = new QHBoxLayout;
+    //layout->addWidget(toolBox);
+    QGraphicsView * view = new QGraphicsView(scene);
+    view->setViewport(new QGLWidget(QGLFormat(QGL::SampleBuffers)));
+    view->setViewportUpdateMode(QGraphicsView::FullViewportUpdate);
 
-protected:
-#ifndef QT_NO_WHEELEVENT
-    void wheelEvent(QWheelEvent *) Q_DECL_OVERRIDE;
-#endif
+    layout->addWidget(view);
 
-private:
-    View *view;
-};
+    QWidget *widget = new QWidget;
+    widget->setLayout(layout);
 
-class View : public QFrame
+    setCentralWidget(widget);
+    setWindowTitle(tr("OpenGL"));
+
+    myGraphicsscene* m_graphicsScene = new myGraphicsscene(this);
+    view->setScene(m_graphicsScene);
+
+    //view->scene()->setSceneRect(m_graphicsScene->rect());
+
+    setStyleSheet("QWidget {"
+                  "font-family: Segoe UI;"
+                  "font-size: 14px;"
+                  "font-weight: normal;"
+                  "font-style: normal;"
+                  "text-align: center center;"
+                  "color: white;"
+                  "border-radius: 2px;"
+                  "background-color: #2d3338;"
+                  "}");
+}
+
+MainWindow::~MainWindow()
 {
-    Q_OBJECT
-public:
-    explicit View(const QString &name, QWidget *parent = 0);
+}
 
-    //QGraphicsView *view() const;
-
-public slots:
-    void zoomIn(int level = 1);
-    void zoomOut(int level = 1);
-
-private slots:
-    void resetView();
-    void setResetButtonEnabled();
-    void setupMatrix();
-    void togglePointerMode();
-    void toggleOpenGL();
-    void toggleAntialiasing();
-    void rotateLeft();
-    void rotateRight();
-
-private:
-    QCheckBox *selectModeButton;
-    QToolButton *openGlButton;
-    QToolButton *resetButton;
-    QSlider *rotateSlider;
-};
-
-#endif // VIEW_H

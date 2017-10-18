@@ -40,8 +40,15 @@
 #endif
 #include <qmath.h>
 
+MyGraphicsView::MyGraphicsView(QWidget *parent) : QGraphicsView(parent)
+{
+    view = new View("");
+    this->setHorizontalScrollBarPolicy ( Qt::ScrollBarAlwaysOff );
+    this->setVerticalScrollBarPolicy ( Qt::ScrollBarAlwaysOff );
+}
+
 #ifndef QT_NO_WHEELEVENT
-void GraphicsView::wheelEvent(QWheelEvent *e)
+void MyGraphicsView::wheelEvent(QWheelEvent *e)
 {
     if (e->modifiers() & Qt::ControlModifier) {
         if (e->delta() > 0)
@@ -61,14 +68,13 @@ View::View(const QString &name, QWidget *parent)
     setStyleSheet("QFrame {  border: 2px solid #7d7d7d; }");
 
     setFrameStyle(Sunken | StyledPanel);
-    graphicsView = new GraphicsView(this);
-    graphicsView->setRenderHint(QPainter::Antialiasing, false);
-    graphicsView->setDragMode(QGraphicsView::RubberBandDrag);
-    graphicsView->setOptimizationFlags(QGraphicsView::DontSavePainterState);
-    graphicsView->setViewportUpdateMode(QGraphicsView::SmartViewportUpdate);
-    graphicsView->setTransformationAnchor(QGraphicsView::AnchorUnderMouse);
-    graphicsView->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff );
-    graphicsView->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff );
+//    graphicsView->setRenderHint(QPainter::Antialiasing, false);
+//    graphicsView->setDragMode(QGraphicsView::RubberBandDrag);
+//    graphicsView->setOptimizationFlags(QGraphicsView::DontSavePainterState);
+//    graphicsView->setViewportUpdateMode(QGraphicsView::SmartViewportUpdate);
+//    graphicsView->setTransformationAnchor(QGraphicsView::AnchorUnderMouse);
+//    graphicsView->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff );
+//    graphicsView->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff );
 
     int size = style()->pixelMetric(QStyle::PM_ToolBarIconSize);
     QSize iconSize(size, size);
@@ -135,7 +141,7 @@ View::View(const QString &name, QWidget *parent)
 
     QGridLayout *topLayout = new QGridLayout;
     topLayout->addLayout(labelLayout, 0, 0);
-    topLayout->addWidget(graphicsView, 1, 0);
+    //topLayout->addWidget(graphicsView, 1, 0);
     topLayout->addLayout(zoomSliderLayout, 1, 1);
     topLayout->addLayout(rotateSliderLayout, 2, 0);
     topLayout->addWidget(resetButton, 2, 1);
@@ -153,16 +159,16 @@ View::View(const QString &name, QWidget *parent)
     setupMatrix();
 }
 
-QGraphicsView *View::view() const
-{
-    return static_cast<QGraphicsView *>(graphicsView);
-}
+//QGraphicsView *View::view() const
+//{
+//    return static_cast<QGraphicsView *>(graphicsView);
+//}
 
 void View::resetView()
 {
     rotateSlider->setValue(0);
     setupMatrix();
-    graphicsView->ensureVisible(QRectF(0, 0, 0, 0));
+    //ensureVisible(QRectF(0, 0, 0, 0));
 
     resetButton->setEnabled(false);
 }
@@ -174,28 +180,20 @@ void View::setResetButtonEnabled()
 
 void View::setupMatrix()
 {
-    qreal scale = 1;
-
-    QMatrix matrix;
-    matrix.scale(scale, scale);
-    matrix.rotate(rotateSlider->value());
-
-    graphicsView->setMatrix(matrix);
-    setResetButtonEnabled();
 }
 
 void View::togglePointerMode()
 {
-    graphicsView->setDragMode(selectModeButton->isChecked()
-                              ? QGraphicsView::RubberBandDrag
-                              : QGraphicsView::ScrollHandDrag);
-    graphicsView->setInteractive(selectModeButton->isChecked());
+//    graphicsView->setDragMode(selectModeButton->isChecked()
+//                              ? QGraphicsView::RubberBandDrag
+//                              : QGraphicsView::ScrollHandDrag);
+//    graphicsView->setInteractive(selectModeButton->isChecked());
 }
 
 void View::toggleOpenGL()
 {
 #ifndef QT_NO_OPENGL
-    graphicsView->setViewport(openGlButton->isChecked() ? new QOpenGLWidget() : new QWidget);
+    //graphicsView->setViewport(openGlButton->isChecked() ? new QOpenGLWidget() : new QWidget);
 #endif
 }
 

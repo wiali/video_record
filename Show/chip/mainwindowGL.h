@@ -31,63 +31,25 @@
 **
 ****************************************************************************/
 
-#ifndef VIEW_H
-#define VIEW_H
+#ifndef MAINWINDOW_H
+#define MAINWINDOW_H
 
-#include <QFrame>
-#include <QGraphicsView>
+#include <QMainWindow>
 
 QT_BEGIN_NAMESPACE
-class QLabel;
-class QSlider;
-class QToolButton;
-class QCheckBox;
+class QGraphicsScene;
+class QSplitter;
 QT_END_NAMESPACE
 
-class View;
-
-class MyGraphicsView : public QGraphicsView
+class MainWindow : public QMainWindow
 {
     Q_OBJECT
 public:
-    explicit MyGraphicsView(QWidget *parent = Q_NULLPTR);
-
-protected:
-#ifndef QT_NO_WHEELEVENT
-    void wheelEvent(QWheelEvent *) Q_DECL_OVERRIDE;
-#endif
-
-private:
-    View *view;
-};
-
-class View : public QFrame
-{
-    Q_OBJECT
-public:
-    explicit View(const QString &name, QWidget *parent = 0);
-
-    //QGraphicsView *view() const;
-
-public slots:
-    void zoomIn(int level = 1);
-    void zoomOut(int level = 1);
+    MainWindow(QWidget *parent = 0);
 
 private slots:
-    void resetView();
-    void setResetButtonEnabled();
-    void setupMatrix();
-    void togglePointerMode();
-    void toggleOpenGL();
-    void toggleAntialiasing();
-    void rotateLeft();
-    void rotateRight();
 
-private:
-    QCheckBox *selectModeButton;
-    QToolButton *openGlButton;
-    QToolButton *resetButton;
-    QSlider *rotateSlider;
+private:    
 };
 
-#endif // VIEW_H
+#endif // MAINWINDOW_H
