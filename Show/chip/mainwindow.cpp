@@ -35,6 +35,7 @@
 #include "mainwindow.h"
 #include "view.h"
 
+#include <QString>
 #include <QHBoxLayout>
 #include <QSplitter>
 #include <QLabel>
@@ -46,6 +47,17 @@
 #include "ui_mainwindow.h"
 #include "video_widget.h"
 #include "presentation_window.h"
+
+/*
+ * QGraphicsEllipseItem  提供一个椭圆item
+QGraphicsLineItem     提供一条线的item
+QGraphicsPathItem     提供一个任意的路径item
+QGraphicsPixmapItem   提供一个图形item
+QGraphicsPolygonItem  提供一个多边形item
+QGraphicsRectItem     提供一个矩形item
+QGraphicsSimpleTextItem 提供一个简单的文本item
+QGraphicsTextItem     提供一个文本浏览item
+*/
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
@@ -61,26 +73,32 @@ MainWindow::MainWindow(QWidget *parent)
     zoomInIcon->setIcon(QPixmap(":/zoomin.png"));
     zoomInIcon->setIconSize(QSize(32,32));
     topLayout->addWidget(zoomInIcon);
-    topLayout->addStretch(0);
 
     QToolButton *zoomOutIcon = new QToolButton;
-    zoomOutIcon->setAutoRepeat(true);
     zoomOutIcon->setIcon(QPixmap(":/zoomout.png"));
     zoomOutIcon->setIconSize(QSize(32, 32));
     topLayout->addWidget(zoomOutIcon);
     topLayout->addStretch();
 
-    topLayout->addStretch(1);
 
     QVBoxLayout *bottomLayout = new QVBoxLayout;
 
+    QSpacerItem* space1 =new QSpacerItem(275, 20);
+    bottomLayout->addSpacerItem(space1);
+
     bottomLayout->addWidget(new QLabel("Sources"), 0, Qt::AlignCenter);
     //bottomLayout->addStretch();
+
+    QSpacerItem* space2 =new QSpacerItem(275, 10);
+    bottomLayout->addSpacerItem(space2);
 
     scene = new QGraphicsScene;
     QGraphicsView* view = new QGraphicsView(scene);    
 
     int itemPos[] = { 0,130,260,390 };
+    int textPos[] = {45, 35, 45, 35};
+    QString texts[] = {"Monitor", "Touch Mat", "WebCam", "Down Cam"};
+
     for(int i = 0; i < 4; i++)
     {
         Chip *item = new Chip;
@@ -88,21 +106,12 @@ MainWindow::MainWindow(QWidget *parent)
         item->setPos(0, itemPos[i]);
         scene->addItem(item);
 
-        QLabel* pMonitorName = new QLabel("Some Text");
-
-        // add the widget - internally, the QGraphicsProxyWidget is created and returned
-        QGraphicsProxyWidget* pProxyWidget = scene->addWidget(pMonitorName);
-        QSpacerItem
-
-        //QGraphicsTextItem* mTextItem = new QGraphicsTextItem("Monitor Screen");
-        //mTextItem->setPos(20, i*80+20 +item->boundingRect().height());
-        //scene->addItem(mTextItem);
-
-        //QGraphicsRectItem* item_space = new QGraphicsRectItem(
-        //            QRectF(20, i*80+20 +item->boundingRect().height() , item->boundingRect().width(), 40));
-        //item_space->setBrush(QBrush(QColor(Qt::green)));
-        //item_space->setOpacity(0.5);
-        //scene->addItem(item_space);
+        QGraphicsTextItem* mTextItem = new QGraphicsTextItem(texts[i]);
+        //space 40
+        mTextItem->setDefaultTextColor(Qt::white);
+        mTextItem->setFont(QFont("Segoe UI"));
+        mTextItem->setPos(textPos[i], itemPos[i] +item->boundingRect().height()+2);
+        scene->addItem(mTextItem);
     }
 
     view->setScene(scene);
@@ -114,6 +123,7 @@ MainWindow::MainWindow(QWidget *parent)
     QToolButton *btn_present = new QToolButton;
     btn_present->setIcon(QPixmap(":/icon-present-press.png"));
     btn_present->setIconSize(QSize(64, 64));
+    btn_present->setStyleSheet("background: transparent;");
     bottomLayout->addWidget(btn_present, 0, Qt::AlignCenter);
     bottomLayout->addStretch();
 
@@ -125,7 +135,7 @@ MainWindow::MainWindow(QWidget *parent)
 
     ui->centralWidget->setStyleSheet("QWidget {"
         "font-family: Segoe UI;"
-        "font-size: 14px;"
+        "font-size: 20px;"
         "font-weight: normal;"
         "font-style: normal;"
         "text-align: center center;"
@@ -133,62 +143,6 @@ MainWindow::MainWindow(QWidget *parent)
         "border-radius: 2px;"
         "background-color: #2d3338;"
         "}");
-
-//    QLabel* label1 = new QLabel(tr("Monitor"));
-//    label1->setAlignment(Qt::AlignHCenter);
-
-//    View *view = new View("");
-//    view->view()->setScene(scene);
-
-
-//    view = new View("");
-//    view->view()->setScene(scene);
-//    QWidget* spaceWindow2 = new QWidget;
-//    QVBoxLayout *labelLayout2 = new QVBoxLayout;
-//    QLabel* label2 = new QLabel(tr("TouchMat"));
-//    label2->setAlignment(Qt::AlignHCenter);
-//    labelLayout2->addWidget(view);
-//    labelLayout2->addWidget(label2);
-//    spaceWindow2->setLayout(labelLayout2);
-//    vSplitter->addWidget(spaceWindow2);
-
-//    view = new View("");
-//    view->view()->setScene(scene);
-//    QWidget* spaceWindow3 = new QWidget;
-//    QVBoxLayout *labelLayout3 = new QVBoxLayout;
-//    QLabel* label3 = new QLabel(tr("Web Cam"));
-//    label3->setAlignment(Qt::AlignHCenter);
-//    labelLayout3->addWidget(view);
-//    labelLayout3->addWidget(label3);
-//    spaceWindow3->setLayout(labelLayout3);
-//    vSplitter->addWidget(spaceWindow3);
-
-//    view = new View("");
-//    view->view()->setScene(scene);
-//    QWidget* spaceWindow4 = new QWidget;
-//    QVBoxLayout *labelLayout4 = new QVBoxLayout;
-//    QLabel* label4 = new QLabel(tr("Down Cam"));
-//    label4->setAlignment(Qt::AlignHCenter);
-//    labelLayout4->addWidget(view);
-//    labelLayout4->addWidget(label4);
-//    spaceWindow4->setLayout(labelLayout4);
-//    vSplitter->addWidget(spaceWindow4);
-
-//    QWidget* spaceWindow5 = new QWidget;
-//    QVBoxLayout *labelLayout5 = new QVBoxLayout;
-//    QToolButton *buttonIcon = new QToolButton;
-//    buttonIcon->setIcon(QPixmap(":/icon-present-press.png"));
-//    QSize iconSize(100, 100);
-//    buttonIcon->setIconSize(iconSize);
-//    //buttonIcon->setStyleSheet("font-size: 34px; color: white; background: transparent; font-family: Segoe UI;");
-//    labelLayout5->addWidget(buttonIcon);
-//    spaceWindow5->setLayout(labelLayout5);
-//    labelLayout5->setAlignment(Qt::AlignHCenter | Qt::AlignVCenter);
-//    vSplitter->addWidget(spaceWindow5);
-
-//    QHBoxLayout *layout = new QHBoxLayout;
-//    layout->addWidget(vSplitter);
-//    setLayout(layout);
 
 //    connect(buttonIcon, SIGNAL(clicked()), this, SLOT(onPresentation()));
 

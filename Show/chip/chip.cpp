@@ -46,15 +46,20 @@ Chip::Chip()
 
 QRectF Chip::boundingRect() const
 {
-    return QRectF(0, 0, 162, 90);
+    return QRectF(-2, -2, 164, 90);
 }
 
 void Chip::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget)
 {
     Q_UNUSED(widget);
 
+    //setStyleSheet("QFrame {  border: 2px solid #7d7d7d; }");
+
+    QPen pen("#7d7d7d");
+    pen.setWidth(4);
+    painter->setPen(pen);
     painter->drawRect(QRect(0,0,160,90));
-    painter->fillRect(QRectF(2, 2, 160-4, 90-4), Qt::blue);
+    //painter->fillRect(QRectF(2, 2, 160-4, 90-4), "#7d7d7d");
 }
 
 void Chip::mousePressEvent(QGraphicsSceneMouseEvent *event)

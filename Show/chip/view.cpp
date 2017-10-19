@@ -65,9 +65,9 @@ void MyGraphicsView::wheelEvent(QWheelEvent *e)
 View::View(const QString &name, QWidget *parent)
     : QFrame(parent)
 {
-    setStyleSheet("QFrame {  border: 2px solid #7d7d7d; }");
+//    setStyleSheet("QFrame {  border: 2px solid #7d7d7d; }");
 
-    setFrameStyle(Sunken | StyledPanel);
+    //setFrameStyle(Sunken | StyledPanel);
 //    graphicsView->setRenderHint(QPainter::Antialiasing, false);
 //    graphicsView->setDragMode(QGraphicsView::RubberBandDrag);
 //    graphicsView->setOptimizationFlags(QGraphicsView::DontSavePainterState);
