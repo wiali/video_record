@@ -32,7 +32,7 @@
 ****************************************************************************/
 
 #include "chip.h"
-#include "mainwindow.h"
+#include "mainwindowGL.h"
 #include "view.h"
 
 #include <QHBoxLayout>
@@ -42,16 +42,17 @@
 #include <QToolButton>
 #include <QGraphicsLinearLayout>
 #include <QGraphicsGridLayout>
+#include <QGraphicsView>
 
 #include "mygraphicsscene.h"
 #include <QGLWidget>
 
-MainWindow::MainWindow(QWidget *parent)
+MainWindowGL::MainWindowGL(QWidget *parent)
     : QMainWindow(parent)
 {
     QHBoxLayout *layout = new QHBoxLayout;
     //layout->addWidget(toolBox);
-    QGraphicsView * view = new QGraphicsView(scene);
+    QGraphicsView * view = new QGraphicsView();
     view->setViewport(new QGLWidget(QGLFormat(QGL::SampleBuffers)));
     view->setViewportUpdateMode(QGraphicsView::FullViewportUpdate);
 
@@ -79,8 +80,3 @@ MainWindow::MainWindow(QWidget *parent)
                   "background-color: #2d3338;"
                   "}");
 }
-
-MainWindow::~MainWindow()
-{
-}
-

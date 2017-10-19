@@ -43,8 +43,8 @@
 MyGraphicsView::MyGraphicsView(QWidget *parent) : QGraphicsView(parent)
 {
     view = new View("");
-    this->setHorizontalScrollBarPolicy ( Qt::ScrollBarAlwaysOff );
-    this->setVerticalScrollBarPolicy ( Qt::ScrollBarAlwaysOff );
+    this->setHorizontalScrollBarPolicy( Qt::ScrollBarAlwaysOff );
+    this->setVerticalScrollBarPolicy( Qt::ScrollBarAlwaysOff );
 }
 
 #ifndef QT_NO_WHEELEVENT

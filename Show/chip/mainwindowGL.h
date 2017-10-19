@@ -41,11 +41,11 @@ class QGraphicsScene;
 class QSplitter;
 QT_END_NAMESPACE
 
-class MainWindow : public QMainWindow
+class MainWindowGL : public QMainWindow
 {
     Q_OBJECT
 public:
-    MainWindow(QWidget *parent = 0);
+    MainWindowGL(QWidget *parent = 0);
 
 private slots:
 

@@ -52,52 +52,87 @@ MainWindow::MainWindow(QWidget *parent)
     , ui(new Ui::MainWindow)
 {
 
-//    QHBoxLayout *layout = new QHBoxLayout;
-//    layout->addWidget(toolBox);
-//    view = new QGraphicsView(scene);
-//    layout->addWidget(view);
-
-//    QWidget *widget = new QWidget;
-//    widget->setLayout(layout);
-
-//    setCentralWidget(widget);
-
     ui->setupUi(this);
 
-    setStyleSheet("QWidget {"
-                  "font-family: Segoe UI;"
-                  "font-size: 14px;"
-                  "font-weight: normal;"
-                  "font-style: normal;"
-                  "text-align: center center;"
-                  "color: white;"
-                  "border-radius: 2px;"
-                  "background-color: #2d3338;"
-                  "}");
+    setGeometry(1645, 100, 275, 820);
+
+    QHBoxLayout *topLayout = new QHBoxLayout;
+    QToolButton *zoomInIcon = new QToolButton;
+    zoomInIcon->setIcon(QPixmap(":/zoomin.png"));
+    zoomInIcon->setIconSize(QSize(32,32));
+    topLayout->addWidget(zoomInIcon);
+    topLayout->addStretch(0);
+
+    QToolButton *zoomOutIcon = new QToolButton;
+    zoomOutIcon->setAutoRepeat(true);
+    zoomOutIcon->setIcon(QPixmap(":/zoomout.png"));
+    zoomOutIcon->setIconSize(QSize(32, 32));
+    topLayout->addWidget(zoomOutIcon);
+    topLayout->addStretch();
+
+    topLayout->addStretch(1);
+
+    QVBoxLayout *bottomLayout = new QVBoxLayout;
+
+    bottomLayout->addWidget(new QLabel("Sources"), 0, Qt::AlignCenter);
+    //bottomLayout->addStretch();
 
     scene = new QGraphicsScene;
+    QGraphicsView* view = new QGraphicsView(scene);    
 
+    int itemPos[] = { 0,130,260,390 };
     for(int i = 0; i < 4; i++)
     {
-        QImage image(":/qt4logo.png");
-        QColor color(image.pixel(int(image.width()), int(image.height())));
-        Chip *item = new Chip(color, 0, 0);
+        Chip *item = new Chip;
 
-        item->setPos(20, i*80+20);
+        item->setPos(0, itemPos[i]);
         scene->addItem(item);
 
-        QGraphicsTextItem* mTextItem = new QGraphicsTextItem("Monitor Screen");
-        mTextItem->setPos(20, i*80+20 +item->boundingRect().height());
-        scene->addItem(mTextItem);
+        QLabel* pMonitorName = new QLabel("Some Text");
 
-        QGraphicsRectItem* item_space = new QGraphicsRectItem(
-                    QRectF(20, i*80+20 +item->boundingRect().height() , item->boundingRect().width(), 40));
-        item_space->setBrush(QBrush(QColor(Qt::green)));
-        item_space->setOpacity(0.5);
-        scene->addItem(item_space);
+        // add the widget - internally, the QGraphicsProxyWidget is created and returned
+        QGraphicsProxyWidget* pProxyWidget = scene->addWidget(pMonitorName);
+        QSpacerItem
+
+        //QGraphicsTextItem* mTextItem = new QGraphicsTextItem("Monitor Screen");
+        //mTextItem->setPos(20, i*80+20 +item->boundingRect().height());
+        //scene->addItem(mTextItem);
+
+        //QGraphicsRectItem* item_space = new QGraphicsRectItem(
+        //            QRectF(20, i*80+20 +item->boundingRect().height() , item->boundingRect().width(), 40));
+        //item_space->setBrush(QBrush(QColor(Qt::green)));
+        //item_space->setOpacity(0.5);
+        //scene->addItem(item_space);
     }
 
-    ui->myGraphicsView->setScene(scene);
+    view->setScene(scene);
+
+    bottomLayout->addWidget(view, 0, Qt::AlignCenter);    
+    bottomLayout->addStretch();
+
+
+    QToolButton *btn_present = new QToolButton;
+    btn_present->setIcon(QPixmap(":/icon-present-press.png"));
+    btn_present->setIconSize(QSize(64, 64));
+    bottomLayout->addWidget(btn_present, 0, Qt::AlignCenter);
+    bottomLayout->addStretch();
+
+    QVBoxLayout *mainLayout = new QVBoxLayout;
+    mainLayout->addLayout(topLayout);
+    mainLayout->addLayout(bottomLayout);
+
+    ui->centralWidget->setLayout(mainLayout);
+
+    ui->centralWidget->setStyleSheet("QWidget {"
+        "font-family: Segoe UI;"
+        "font-size: 14px;"
+        "font-weight: normal;"
+        "font-style: normal;"
+        "text-align: center center;"
+        "color: white;"
+        "border-radius: 2px;"
+        "background-color: #2d3338;"
+        "}");
 
 //    QLabel* label1 = new QLabel(tr("Monitor"));
 //    label1->setAlignment(Qt::AlignHCenter);

@@ -35,14 +35,9 @@
 
 #include <QtWidgets>
 
-Chip::Chip(const QColor &color, int x, int y)
+Chip::Chip()
 {
-    this->x = x;
-    this->y = y;
-    this->color = color;
-    setZValue((x + y) % 2);
-
-    setFlags(ItemIsSelectable | ItemIsMovable);
+    //setFlags(ItemIsSelectable | ItemIsMovable);
     setAcceptHoverEvents(true);
 
     setToolTip("Click and drag me!");   //提示
@@ -51,32 +46,15 @@ Chip::Chip(const QColor &color, int x, int y)
 
 QRectF Chip::boundingRect() const
 {
-    return QRectF(0, 0, 200, 100);
-}
-
-QPainterPath Chip::shape() const
-{
-    QPainterPath path;
-    path.addRect(0, 0, 200, 100);
-    return path;
+    return QRectF(0, 0, 162, 90);
 }
 
 void Chip::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget)
 {
     Q_UNUSED(widget);
 
-    painter->drawRect(QRect(0,0,200,80));
-
-    painter->fillRect(QRectF(2, 2, 198, 78), Qt::white);
-
-    painter->fillRect(QRectF(0, 80, 200, 20), Qt::transparent);
-
-    QFont font("Times", 12);
-    font.setStyleStrategy(QFont::ForceOutline);
-    painter->setFont(font);
-    painter->drawText(100, 85, QString("Manufacturer: Chip Manufacturer"));
-
-
+    painter->drawRect(QRect(0,0,160,90));
+    painter->fillRect(QRectF(2, 2, 160-4, 90-4), Qt::blue);
 }
 
 void Chip::mousePressEvent(QGraphicsSceneMouseEvent *event)
@@ -88,7 +66,7 @@ void Chip::mousePressEvent(QGraphicsSceneMouseEvent *event)
 void Chip::mouseMoveEvent(QGraphicsSceneMouseEvent *event)
 {
     if (event->modifiers() & Qt::ShiftModifier) {
-        stuff << event->pos();
+        //stuff << event->pos();
         update();
         return;
     }
@@ -99,24 +77,4 @@ void Chip::mouseReleaseEvent(QGraphicsSceneMouseEvent *event)
 {
     QGraphicsItem::mouseReleaseEvent(event);
     update();
-}
-
-void Chip::setGeometry(const QRectF &geom)
-{
-    prepareGeometryChange();
-    QGraphicsLayoutItem::setGeometry(geom);
-    setPos(geom.topLeft());
-}
-
-QSizeF Chip::sizeHint(Qt::SizeHint which, const QSizeF &constraint) const
-{
-    switch (which) {
-    case Qt::MinimumSize:
-    case Qt::PreferredSize:
-    case Qt::MaximumSize:
-        return QSizeF(1000,1000);
-    default:
-        break;
-    }
-    return constraint;
 }

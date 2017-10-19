@@ -1,13 +1,8 @@
 #include "mygraphicsscene.h"
 #include <QPaintEngine>
 #include <Windows.h>
-#include <gl/GL.h>
-#include <gl/GLU.h>
 #include <qopengl.h>
 #include <QMatrix4x4>
-#define GL_GLEXT_PROTOTYPES
-#include <GLES2/gl2.h>
-#include <GLES2/gl2ext.h>
 #include <QOpenGLFunctions>
 
 
@@ -42,10 +37,10 @@ void myGraphicsscene::drawBackground(QPainter *painter,
         return;
     }
 
+    auto f = QOpenGLContext::currentContext()->functions();
 
-    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-           glColor3f(0.4f, 1.0f, 0.0f);
-           glRectf(-0.75f,0.75f, 0.75f, -0.75f);
-
-
+    f->glClearColor(1, 0, 0, 1);
+    f->glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+    //f->glDrawArrays(GL_QUADS, 0.4f, 1.0f, 0.0f);
+    //f->glRectf(-0.75f,0.75f, 0.75f, -0.75f);
 }

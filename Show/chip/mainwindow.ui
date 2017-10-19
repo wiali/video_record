@@ -26,35 +26,9 @@
      <verstretch>1</verstretch>
     </sizepolicy>
    </property>
-   <widget class="MyGraphicsView" name="myGraphicsView">
-    <property name="geometry">
-     <rect>
-      <x>10</x>
-      <y>10</y>
-      <width>371</width>
-      <height>531</height>
-     </rect>
-    </property>
-    <property name="sizePolicy">
-     <sizepolicy hsizetype="Maximum" vsizetype="Maximum">
-      <horstretch>1</horstretch>
-      <verstretch>1</verstretch>
-     </sizepolicy>
-    </property>
-    <property name="cursor" stdset="0">
-     <cursorShape>ArrowCursor</cursorShape>
-    </property>
-   </widget>
   </widget>
  </widget>
  <layoutdefault spacing="6" margin="11"/>
- <customwidgets>
-  <customwidget>
-   <class>MyGraphicsView</class>
-   <extends>QGraphicsView</extends>
-   <header location="global">C:\A_video\video_record\Show\chip\view.h</header>
-  </customwidget>
- </customwidgets>
  <resources/>
  <connections/>
 </ui>

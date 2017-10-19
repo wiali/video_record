@@ -83,8 +83,7 @@ void PresentationWindow::populateScene()
     QImage image(":/qt4logo.png");
 
     // Populate scene
-    QColor color(image.pixel(int(image.width()), int(image.height())));
-    Chip *item = new Chip(color, 0, 0);
+    Chip *item = new Chip();
     item->setPos(QPointF(0, 0));
     scene->addItem(item);
 }

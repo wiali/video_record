@@ -38,18 +38,13 @@
 #include <QGraphicsItem>
 #include <QGraphicsLayoutItem>
 
-class Chip : public QGraphicsItem, public QGraphicsLayoutItem
+class Chip : public QGraphicsItem
 {
 public:
-    Chip(const QColor &color, int x, int y);
+    Chip();
 
     QRectF boundingRect() const Q_DECL_OVERRIDE;
-    QPainterPath shape() const Q_DECL_OVERRIDE;
     void paint(QPainter *painter, const QStyleOptionGraphicsItem *item, QWidget *widget) Q_DECL_OVERRIDE;
-
-    // Inherited from QGraphicsLayoutItem
-    void setGeometry(const QRectF &geom) Q_DECL_OVERRIDE;
-    QSizeF sizeHint(Qt::SizeHint which, const QSizeF &constraint = QSizeF()) const Q_DECL_OVERRIDE;
 
 protected:
     void mousePressEvent(QGraphicsSceneMouseEvent *event) Q_DECL_OVERRIDE;
@@ -57,10 +52,7 @@ protected:
     void mouseReleaseEvent(QGraphicsSceneMouseEvent *event) Q_DECL_OVERRIDE;
 
 private:
-    int x;
-    int y;
-    QColor color;
-    QVector<QPointF> stuff;
+
 };
 
 #endif // CHIP_H
