@@ -14,7 +14,9 @@ HEADERS += mainwindow.h \
     video_widget.h \
     presentation_window.h \
     mainwindowGL.h \
-    mygraphicsscene.h
+    mygraphicsscene.h \
+    presentation_mainwindow.h \
+    down_cam.h
 
 SOURCES += main.cpp \
     video_widget.cpp \
@@ -23,7 +25,9 @@ SOURCES += main.cpp \
     chip.cpp \
     presentation_window.cpp \
     mainwindowGL.cpp \
-    mygraphicsscene.cpp
+    mygraphicsscene.cpp \
+    presentation_mainwindow.cpp \
+    down_cam.cpp
 
 QT += widgets
 QT += opengl
@@ -32,4 +36,5 @@ LIBS += $$PWD/../OpenCV/lib/opencv_world320.lib
 win32:LIBS += -lUser32 -lShell32 -lWtsapi32 -lwevtapi -lgdi32
 
 FORMS += \
-    mainwindow.ui
+    mainwindow.ui \
+    presentation_mainwindow.ui

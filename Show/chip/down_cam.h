@@ -31,45 +31,23 @@
 **
 ****************************************************************************/
 
-#ifndef MAINWINDOW_H
-#define MAINWINDOW_H
+#pragma once
 
-#include <QMainWindow>
+#include <QColor>
+#include <QGraphicsItem>
 
-QT_BEGIN_NAMESPACE
-class QGraphicsScene;
-class QSplitter;
-class PresentMainWindow;
-class DownCam;
-QT_END_NAMESPACE
-
-namespace Ui {
-class MainWindow;
-}
-
-class MainWindow : public QMainWindow
+class DownCam : public QGraphicsItem
 {
-    Q_OBJECT
 public:
-    MainWindow(QWidget *parent = 0);
-    ~MainWindow();
+    explicit DownCam(const QSizeF &size);
 
-protected:
-    void paintEvent(QPaintEvent *event) override;
+    QRectF boundingRect() const Q_DECL_OVERRIDE;
+    void paint(QPainter *painter, const QStyleOptionGraphicsItem *item, QWidget *widget) Q_DECL_OVERRIDE;
 
-private slots:
-    void onPresentation();
+    void setImage(const QImage& stream);
+    void setSize(const QSizeF &size);
 
-private:    
-    void setupMatrix();
-
-    Ui::MainWindow *ui;
-
-    QGraphicsScene *scene;
-
-    PresentMainWindow* m_window;
-
-    QVector<DownCam*> m_Cam_items;
+private:
+    QSizeF m_size;
+    QImage m_stream;
 };
-
-#endif // MAINWINDOW_H

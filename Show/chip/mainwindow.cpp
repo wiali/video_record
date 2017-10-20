@@ -43,10 +43,12 @@
 #include <QToolButton>
 #include <QGraphicsLinearLayout>
 #include <QGraphicsGridLayout>
+#include <QThread>
 
 #include "ui_mainwindow.h"
 #include "video_widget.h"
-#include "presentation_window.h"
+#include "presentation_mainwindow.h"
+#include "down_cam.h"
 
 /*
  * QGraphicsEllipseItem  提供一个椭圆item
@@ -77,16 +79,16 @@ MainWindow::MainWindow(QWidget *parent)
 
     for(int i = 0; i < 4; i++)
     {
-        Chip *item = new Chip;
-
-        item->setPos(0, itemPos[i]);
-        scene->addItem(item);
+        DownCam* pCamItem = new DownCam(QSize(164, 90));
+        m_Cam_items.push_back(pCamItem);
+        pCamItem->setPos(0, itemPos[i]);
+        scene->addItem(pCamItem);
 
         QGraphicsTextItem* mTextItem = new QGraphicsTextItem(texts[i]);
         //space 40
         mTextItem->setDefaultTextColor(Qt::white);
         mTextItem->setFont(QFont("Segoe UI"));
-        mTextItem->setPos(textPos[i], itemPos[i] +item->boundingRect().height()+2);
+        mTextItem->setPos(textPos[i], itemPos[i] + pCamItem->boundingRect().height()+2);
         scene->addItem(mTextItem);
     }
 
@@ -94,17 +96,20 @@ MainWindow::MainWindow(QWidget *parent)
 
     ui->verticalLayout->addWidget(view, 0);
 
- //    connect(buttonIcon, SIGNAL(clicked()), this, SLOT(onPresentation()));
+    connect(ui->PresentButton, SIGNAL(clicked()), this, SLOT(onPresentation()));
 
     setWindowTitle(tr("WorkTools Show"));
+
+    m_window = new PresentMainWindow();
+    m_window->setVisible(false);
 }
 
 void MainWindow::onPresentation()
 {
 //    VideoWidget vw;
 //    vw.show();
-    PresentationWindow window;
-    window.show();
+    m_window->setVisible(true);
+    m_window->showMaximized();
 }
 
 MainWindow::~MainWindow()
@@ -112,3 +117,18 @@ MainWindow::~MainWindow()
     delete ui;
 }
 
+
+void MainWindow::paintEvent(QPaintEvent *event)
+{
+    if (!m_window->isVisible())
+    {
+        QMainWindow::paintEvent(event);
+        return;
+    }
+
+    //m_Cam_items[0]->setImage(m_window->m_image_monitor);
+    //m_Cam_items[2]->setImage(m_window->m_image_webCam);
+    //m_Cam_items[3]->setImage(m_window->m_image_downCam);
+
+    QMainWindow::paintEvent(event);
+}

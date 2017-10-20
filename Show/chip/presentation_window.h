@@ -35,15 +35,6 @@
 #define PRESENTATION_WINDOW_H
 
 #include <QWidget>
-#include <opencv2/opencv.hpp>
-#include <opencv2/core.hpp>
-#include <opencv2/highgui.hpp>
-#include <opencv2/videoio.hpp> // for camera
-
-#include <opencv2/core/ocl.hpp>
-
-#include "opencv2/imgproc.hpp"
-#include <Windows.h>
 
 QT_BEGIN_NAMESPACE
 class QGraphicsScene;
@@ -61,8 +52,6 @@ private slots:
 private:
     void setupMatrix();
     void populateScene();
-
-    cv::Mat hwnd2mat(HWND hwnd);
 
     QGraphicsScene *scene;
 };

@@ -46,6 +46,7 @@ Chip::Chip()
 
 QRectF Chip::boundingRect() const
 {
+    //return QRectF(QPointF(), size);
     return QRectF(-2, -2, 164, 90);
 }
 

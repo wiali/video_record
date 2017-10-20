@@ -31,45 +31,90 @@
 **
 ****************************************************************************/
 
-#ifndef MAINWINDOW_H
-#define MAINWINDOW_H
+#ifndef PRESENTATION_MAINWINDOW_H
+#define PRESENTATION_MAINWINDOW_H
 
 #include <QMainWindow>
+
+#include <opencv2/opencv.hpp>
+#include <opencv2/core.hpp>
+#include <opencv2/highgui.hpp>
+#include <opencv2/videoio.hpp> // for camera
+
+#include <opencv2/core/ocl.hpp>
+
+#include "opencv2/imgproc.hpp"
+#include <Windows.h>
 
 QT_BEGIN_NAMESPACE
 class QGraphicsScene;
 class QSplitter;
-class PresentMainWindow;
 class DownCam;
 QT_END_NAMESPACE
 
+enum ScreenType
+{
+    MonitorScreen = 0,
+    MatScreen = 1,
+    PresentScreen = 2
+};
+
 namespace Ui {
-class MainWindow;
+class PresentMainWindow;
 }
 
-class MainWindow : public QMainWindow
+class PresentMainWindow : public QMainWindow
 {
     Q_OBJECT
 public:
-    MainWindow(QWidget *parent = 0);
-    ~MainWindow();
 
+
+    PresentMainWindow(QWidget *parent = 0);
+    ~PresentMainWindow();
+
+    QImage m_image_downCam;
+    QImage m_image_webCam;
+    QImage m_image_monitor;
+
+
+    static QScreen* findScreen(const ScreenType& type, int* index = nullptr);
+
+    static QRect findScreenGeometry(const ScreenType &type);
+
+    static void setHardwareIds(QStringList monitorHardwareIds, QStringList matHardwareIds);
+
+    static QStringList monitorHardwareIds() { return m_monitorHardwareIds; }
+
+    static QStringList matHardwareIds() { return m_matHardwareIds; }
+
+
+    static QMap<QString, QString> getScreenNames();
 protected:
     void paintEvent(QPaintEvent *event) override;
 
 private slots:
-    void onPresentation();
 
 private:    
-    void setupMatrix();
+    cv::Mat hwnd2mat(HWND hwnd);
+    QImage mat2Image_shared(const cv::Mat &mat, QImage::Format formatHint);
 
-    Ui::MainWindow *ui;
+    Ui::PresentMainWindow *ui;
 
-    QGraphicsScene *scene;
+    QGraphicsScene* m_scene;
 
-    PresentMainWindow* m_window;
+    cv::VideoCapture m_downCam;
+    cv::VideoCapture m_webCam;
 
-    QVector<DownCam*> m_Cam_items;
+    DownCam* m_downCam_item;
+    DownCam* m_webCam_item;
+    DownCam* m_monitor_item;
+
+    cv::Mat m_frame_downCam;
+    cv::Mat m_frame_webCam;
+    cv::Mat m_frame_monitor;
+
+    static QStringList m_monitorHardwareIds;
+    static QStringList m_matHardwareIds;
 };
 
-#endif // MAINWINDOW_H
+#endif // PRESENTATION_MAINWINDOW_H

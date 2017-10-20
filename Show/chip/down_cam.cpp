@@ -31,45 +31,35 @@
 **
 ****************************************************************************/
 
-#ifndef MAINWINDOW_H
-#define MAINWINDOW_H
+#include "down_cam.h"
+#include <QPainter>
 
-#include <QMainWindow>
-
-QT_BEGIN_NAMESPACE
-class QGraphicsScene;
-class QSplitter;
-class PresentMainWindow;
-class DownCam;
-QT_END_NAMESPACE
-
-namespace Ui {
-class MainWindow;
+DownCam::DownCam(const QSizeF &size) : m_size(size)
+{
 }
 
-class MainWindow : public QMainWindow
+QRectF DownCam::boundingRect() const
 {
-    Q_OBJECT
-public:
-    MainWindow(QWidget *parent = 0);
-    ~MainWindow();
+    return QRectF(QPointF(), m_size);
+}
 
-protected:
-    void paintEvent(QPaintEvent *event) override;
+void DownCam::setImage(const QImage& stream)
+{
+    m_stream = stream;
+    update();
+}
 
-private slots:
-    void onPresentation();
+void DownCam::setSize(const QSizeF &size)
+{
+    m_size = size;
+    update();
+}
 
-private:    
-    void setupMatrix();
+void DownCam::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget)
+{
+    Q_UNUSED(widget);
 
-    Ui::MainWindow *ui;
+    QRectF rect = boundingRect();
 
-    QGraphicsScene *scene;
-
-    PresentMainWindow* m_window;
-
-    QVector<DownCam*> m_Cam_items;
-};
-
-#endif // MAINWINDOW_H
+    painter->drawImage(rect, m_stream);
+}
