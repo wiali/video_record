@@ -42,7 +42,7 @@
 
 MyGraphicsView::MyGraphicsView(QWidget *parent) : QGraphicsView(parent)
 {
-    view = new View("");
+    //view = new View("");
     this->setHorizontalScrollBarPolicy( Qt::ScrollBarAlwaysOff );
     this->setVerticalScrollBarPolicy( Qt::ScrollBarAlwaysOff );
 }
@@ -65,6 +65,7 @@ void MyGraphicsView::wheelEvent(QWheelEvent *e)
 View::View(const QString &name, QWidget *parent)
     : QFrame(parent)
 {
+
 //    setStyleSheet("QFrame {  border: 2px solid #7d7d7d; }");
 
     //setFrameStyle(Sunken | StyledPanel);

@@ -66,31 +66,7 @@ MainWindow::MainWindow(QWidget *parent)
 
     ui->setupUi(this);
 
-    setGeometry(1645, 100, 275, 820);
-
-    QHBoxLayout *topLayout = new QHBoxLayout;
-    QToolButton *zoomInIcon = new QToolButton;
-    zoomInIcon->setIcon(QPixmap(":/zoomin.png"));
-    zoomInIcon->setIconSize(QSize(32,32));
-    topLayout->addWidget(zoomInIcon);
-
-    QToolButton *zoomOutIcon = new QToolButton;
-    zoomOutIcon->setIcon(QPixmap(":/zoomout.png"));
-    zoomOutIcon->setIconSize(QSize(32, 32));
-    topLayout->addWidget(zoomOutIcon);
-    topLayout->addStretch();
-
-
-    QVBoxLayout *bottomLayout = new QVBoxLayout;
-
-    QSpacerItem* space1 =new QSpacerItem(275, 20);
-    bottomLayout->addSpacerItem(space1);
-
-    bottomLayout->addWidget(new QLabel("Sources"), 0, Qt::AlignCenter);
-    //bottomLayout->addStretch();
-
-    QSpacerItem* space2 =new QSpacerItem(275, 10);
-    bottomLayout->addSpacerItem(space2);
+    setGeometry(1645, 100, width(), height());
 
     scene = new QGraphicsScene;
     QGraphicsView* view = new QGraphicsView(scene);    
@@ -116,35 +92,9 @@ MainWindow::MainWindow(QWidget *parent)
 
     view->setScene(scene);
 
-    bottomLayout->addWidget(view, 0, Qt::AlignCenter);    
-    bottomLayout->addStretch();
+    ui->verticalLayout->addWidget(view, 0);
 
-
-    QToolButton *btn_present = new QToolButton;
-    btn_present->setIcon(QPixmap(":/icon-present-press.png"));
-    btn_present->setIconSize(QSize(64, 64));
-    btn_present->setStyleSheet("background: transparent;");
-    bottomLayout->addWidget(btn_present, 0, Qt::AlignCenter);
-    bottomLayout->addStretch();
-
-    QVBoxLayout *mainLayout = new QVBoxLayout;
-    mainLayout->addLayout(topLayout);
-    mainLayout->addLayout(bottomLayout);
-
-    ui->centralWidget->setLayout(mainLayout);
-
-    ui->centralWidget->setStyleSheet("QWidget {"
-        "font-family: Segoe UI;"
-        "font-size: 20px;"
-        "font-weight: normal;"
-        "font-style: normal;"
-        "text-align: center center;"
-        "color: white;"
-        "border-radius: 2px;"
-        "background-color: #2d3338;"
-        "}");
-
-//    connect(buttonIcon, SIGNAL(clicked()), this, SLOT(onPresentation()));
+ //    connect(buttonIcon, SIGNAL(clicked()), this, SLOT(onPresentation()));
 
     setWindowTitle(tr("WorkTools Show"));
 }
