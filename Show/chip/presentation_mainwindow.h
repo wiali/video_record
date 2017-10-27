@@ -97,6 +97,7 @@ private slots:
 private:    
     cv::Mat hwnd2mat(HWND hwnd);
     QImage mat2Image_shared(const cv::Mat &mat, QImage::Format formatHint);
+    QImage Mat2QImage(cv::Mat const& src);
 
     Ui::PresentMainWindow *ui;
 

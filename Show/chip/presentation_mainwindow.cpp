@@ -12,6 +12,7 @@
 #include <QGraphicsLinearLayout>
 #include <QGraphicsGridLayout>
 #include <QScreen>
+#include <QTimer>
 
 #include "ui_presentation_mainwindow.h"
 #include "video_widget.h"
@@ -32,8 +33,8 @@ const QString MONITOR = "monitor";
 const QString MAT = "mat";
 const QString PRESENT = "present";
 
-QStringList PresentMainWindow::m_matHardwareIds;
-QStringList PresentMainWindow::m_monitorHardwareIds;
+QStringList PresentMainWindow::m_matHardwareIds = { "HWP4239" };
+QStringList PresentMainWindow::m_monitorHardwareIds = { "HWP4627", "HWP425D" };
 
 static QHash<ScreenType, QString> ScreenTypeTranslationTable{
     { ScreenType::MonitorScreen, MONITOR },
@@ -51,9 +52,13 @@ PresentMainWindow::PresentMainWindow(QWidget *parent)
 
     ui->setupUi(this);
 
+    setAutoFillBackground(false);
+    setWindowFlags(Qt::FramelessWindowHint);
+    setAttribute(Qt::WA_NoSystemBackground);
+
     setWindowTitle(tr("Presentation Window"));
 
-    m_scene = new QGraphicsScene;
+    m_scene = new QGraphicsScene; 
 
     m_downCam.open(CV_CAP_DSHOW + 0);
     if (!m_downCam.isOpened() )
@@ -93,21 +98,26 @@ void PresentMainWindow::paintEvent(QPaintEvent *event)
     if (!m_downCam.isOpened() )
         return;
 
-    m_downCam >> m_frame_downCam;
-    //cv::resize(m_frame_downCam, m_frame_downCam, cv::Size(width(), height()));
-    m_image_downCam = mat2Image_shared(m_frame_downCam, QImage::Format_RGB888);
-    //m_downCam_item->setSize(width(), height());
-    m_downCam_item->setImage(m_image_downCam);
+    QTimer::singleShot(100, this, [this] {
+        m_downCam >> m_frame_downCam;
+        //cv::resize(m_frame_downCam, m_frame_downCam, cv::Size(width(), height()));
+        m_image_downCam = Mat2QImage(m_frame_downCam);
+        //m_downCam_item->setSize(width(), height());
+        m_downCam_item->setImage(m_image_downCam);
+    });
 
+    QTimer::singleShot(100, this, [this] {
+        m_webCam >> m_frame_webCam;
+        m_image_webCam = Mat2QImage(m_frame_webCam);
+        m_webCam_item->setImage(m_image_webCam);
+    });
 
-    m_webCam >> m_frame_webCam;
-    m_image_webCam = mat2Image_shared(m_frame_webCam, QImage::Format_RGB888);
-    m_webCam_item->setImage(m_image_webCam);
-
-    HWND hwndDesktop = GetDesktopWindow();
-    m_frame_monitor = hwnd2mat(hwndDesktop);
-    m_image_monitor = mat2Image_shared(m_frame_monitor, QImage::Format_RGB888);
-    m_monitor_item->setImage(m_image_monitor);
+    QTimer::singleShot(100, this, [this] {
+        HWND hwndDesktop = GetDesktopWindow();
+        m_frame_monitor = hwnd2mat(hwndDesktop);
+        m_image_monitor = Mat2QImage(m_frame_monitor);
+        m_monitor_item->setImage(m_image_monitor);
+    });
 }
 
 cv::Mat PresentMainWindow::hwnd2mat(HWND hwnd)
@@ -334,9 +344,9 @@ void PresentMainWindow::setHardwareIds(QStringList monitorHardwareIds, QStringLi
     m_matHardwareIds = matHardwareIds;
 }
 
-[hardware]
-.mat_ids = HWP4239
-.monitor_ids = HWP4627, HWP425D
+//[hardware]
+//.mat_ids = HWP4239
+//.monitor_ids = HWP4627, HWP425D
 
 QRect PresentMainWindow::findScreenGeometry(const ScreenType& type)
 {
@@ -465,4 +475,14 @@ QMap<QString, QString> PresentMainWindow::getScreenNames()
 #endif
 
     return screenMap;
+}
+
+QImage PresentMainWindow::Mat2QImage(cv::Mat const& src)
+{
+    cv::Mat temp; // make the same cv::Mat
+    cvtColor(src, temp, CV_BGR2RGB); // cvtColor Makes a copy, that what i need
+    QImage dest((const uchar *)temp.data, temp.cols, temp.rows, temp.step, QImage::Format_RGB888);
+    dest.bits(); // enforce deep copy, see documentation 
+                 // of QImage::QImage ( const uchar * data, int width, int height, Format format )
+    return dest;
 }
