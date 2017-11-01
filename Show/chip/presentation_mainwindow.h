@@ -74,6 +74,7 @@ public:
 
     QImage m_image_downCam;
     QImage m_image_webCam;
+    QImage m_image_mat;
     QImage m_image_monitor;
 
 
@@ -96,8 +97,7 @@ private slots:
 
 private:    
     cv::Mat hwnd2mat(HWND hwnd);
-    QImage mat2Image_shared(const cv::Mat &mat, QImage::Format formatHint);
-    QImage Mat2QImage(cv::Mat const& src);
+    QImage cvMatToQImage(const cv::Mat& inMat);
 
     Ui::PresentMainWindow *ui;
 
@@ -108,11 +108,11 @@ private:
 
     DownCam* m_downCam_item;
     DownCam* m_webCam_item;
+    DownCam* m_mat_item;
     DownCam* m_monitor_item;
 
     cv::Mat m_frame_downCam;
     cv::Mat m_frame_webCam;
-    cv::Mat m_frame_monitor;
 
     static QStringList m_monitorHardwareIds;
     static QStringList m_matHardwareIds;

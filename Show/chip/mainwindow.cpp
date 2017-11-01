@@ -102,17 +102,21 @@ void MainWindow::paintEvent(QPaintEvent *event)
         return;
     }
 
-    QTimer::singleShot(100, this, [this] {
+    //QTimer::singleShot(100, this, [this] {
         m_Cam_items[0]->setImage(m_window->m_image_monitor);
-    });
+    //});
 
-    QTimer::singleShot(100, this, [this] {
+    //QTimer::singleShot(100, this, [this] {
+        m_Cam_items[1]->setImage(m_window->m_image_mat);
+    //});
+
+    //QTimer::singleShot(100, this, [this] {
         m_Cam_items[2]->setImage(m_window->m_image_webCam);
-    });
+    //});
 
-    QTimer::singleShot(100, this, [this] {
+    //QTimer::singleShot(100, this, [this] {
         m_Cam_items[3]->setImage(m_window->m_image_downCam);
-    });
+    //});
 
     QMainWindow::paintEvent(event);
 }
