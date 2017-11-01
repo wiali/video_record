@@ -31,3 +31,29 @@ void DownCam::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, Q
     if(!m_stream.isNull())
         painter->drawImage(rect, m_stream);
 }
+
+void DownCam::mousePressEvent(QGraphicsSceneMouseEvent* event)
+{
+    QGraphicsItem::mousePressEvent(event);
+    if (event->button() == Qt::LeftButton) 
+    {
+        setSelected(!isSelected());
+    }
+}
+
+void DownCam::mouseMoveEvent(QGraphicsSceneMouseEvent* event)
+{
+    if (event->modifiers() & Qt::ShiftModifier) 
+    {
+        //stuff << event->pos();
+        //update();
+        return;
+    }
+    QGraphicsItem::mouseMoveEvent(event);
+}
+
+void DownCam::mouseReleaseEvent(QGraphicsSceneMouseEvent* event)
+{
+    QGraphicsItem::mouseReleaseEvent(event);
+    //update();
+}

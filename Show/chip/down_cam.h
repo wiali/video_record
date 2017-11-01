@@ -2,6 +2,7 @@
 
 #include <QColor>
 #include <QGraphicsItem>
+#include <QGraphicsSceneMouseEvent>
 
 class DownCam : public QGraphicsItem
 {
@@ -13,6 +14,11 @@ public:
 
     void setImage(const QImage& stream);
     void setSize(const QSizeF &size);
+
+protected:
+    void mousePressEvent(QGraphicsSceneMouseEvent* event) override;
+    void mouseMoveEvent(QGraphicsSceneMouseEvent* event) override;
+    void mouseReleaseEvent(QGraphicsSceneMouseEvent* event) override;
 
 private:
     QSizeF m_size;

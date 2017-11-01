@@ -10,9 +10,7 @@ RESOURCES += images.qrc
 
 HEADERS += mainwindow.h \
     view.h \
-    chip.h \
     video_widget.h \
-    presentation_window.h \
     mainwindowGL.h \
     mygraphicsscene.h \
     presentation_mainwindow.h \
@@ -22,8 +20,6 @@ SOURCES += main.cpp \
     video_widget.cpp \
     mainwindow.cpp \
     view.cpp \
-    chip.cpp \
-    presentation_window.cpp \
     mainwindowGL.cpp \
     mygraphicsscene.cpp \
     presentation_mainwindow.cpp \

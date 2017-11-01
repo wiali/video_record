@@ -21,7 +21,7 @@
 
 
 /*
- * QGraphicsEllipseItem  提供一个椭圆item
+QGraphicsEllipseItem  提供一个椭圆item
 QGraphicsLineItem     提供一条线的item
 QGraphicsPathItem     提供一个任意的路径item
 QGraphicsPixmapItem   提供一个图形item
@@ -35,7 +35,6 @@ MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
     , ui(new Ui::MainWindow)
 {
-
     ui->setupUi(this);
 
     setGeometry(1645, 100, width(), height());

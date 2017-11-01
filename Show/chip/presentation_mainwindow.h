@@ -114,8 +114,14 @@ private:
     cv::Mat m_frame_downCam;
     cv::Mat m_frame_webCam;
 
+    QScreen* m_matScreen;
+    QScreen* m_monitorScreen;
+
     static QStringList m_monitorHardwareIds;
     static QStringList m_matHardwareIds;
+
+    cv::Mat m_keyStone_matrix;
+    cv::Size m_correctedSize;
 };
 
 #endif // PRESENTATION_MAINWINDOW_H

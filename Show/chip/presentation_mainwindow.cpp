@@ -16,11 +16,10 @@
 
 #include "ui_presentation_mainwindow.h"
 #include "video_widget.h"
-#include "presentation_window.h"
 #include "down_cam.h"
 
 /*
- * QGraphicsEllipseItem  提供一个椭圆item
+QGraphicsEllipseItem  提供一个椭圆item
 QGraphicsLineItem     提供一条线的item
 QGraphicsPathItem     提供一个任意的路径item
 QGraphicsPixmapItem   提供一个图形item
@@ -77,7 +76,7 @@ PresentMainWindow::PresentMainWindow(QWidget *parent)
         return;
     }
     m_webCam_item = new DownCam(QSize(600, 340));
-    m_webCam_item->setPos(1000, 500);
+    m_webCam_item->setPos(1000, 600);
     m_scene->addItem(m_webCam_item);
 
     m_mat_item = new DownCam(QSize(600, 340));
@@ -85,10 +84,39 @@ PresentMainWindow::PresentMainWindow(QWidget *parent)
     m_scene->addItem(m_mat_item);
 
     m_monitor_item = new DownCam(QSize(600, 340));
-    m_monitor_item->setPos(200, 500);
+    m_monitor_item->setPos(200, 600);
     m_scene->addItem(m_monitor_item);
 
     ui->graphicsView->setScene(m_scene);
+
+    m_matScreen = findScreen(MatScreen);
+    m_monitorScreen = findScreen(MonitorScreen);
+
+    double coefficients[3][3] = { 1 };
+    QTransform invertedHomography = QTransform(
+        0.99800744125081942,
+        -0.12494066354552548,
+        -58.492698385016908,
+        0.0031995645556478947,
+        0.96248397740829172,
+        -333.29982033723468,
+        2.3323995676436789e-07,
+        -5.8578188344702079e-05,
+        1);
+
+    invertedHomography = invertedHomography.inverted();
+    coefficients[0][0] = invertedHomography.m11();
+    coefficients[0][1] = invertedHomography.m12();
+    coefficients[0][2] = invertedHomography.m13();
+    coefficients[1][0] = invertedHomography.m21();
+    coefficients[1][1] = invertedHomography.m22();
+    coefficients[1][2] = invertedHomography.m23();
+    coefficients[2][0] = invertedHomography.m31();
+    coefficients[2][1] = invertedHomography.m32();
+    coefficients[2][2] = invertedHomography.m33();
+
+    m_keyStone_matrix = cv::Mat(3, 3, CV_64F, coefficients).inv();
+    m_correctedSize = cv::Size(4200, 2800);
 }
 
 PresentMainWindow::~PresentMainWindow()
@@ -104,9 +132,11 @@ void PresentMainWindow::paintEvent(QPaintEvent *event)
 
     QTimer::singleShot(40, this, [this] {
         m_downCam >> m_frame_downCam;
-        //cv::resize(m_frame_downCam, m_frame_downCam, cv::Size(width(), height()));
-        m_image_downCam = cvMatToQImage(m_frame_downCam);
-        //m_downCam_item->setSize(width(), height());
+
+        cv::Mat frame_keyStone_downCam;
+        warpPerspective(m_frame_downCam, frame_keyStone_downCam, m_keyStone_matrix, m_correctedSize);
+        //m_image_downCam = cvMatToQImage(m_frame_downCam);
+        m_image_downCam = cvMatToQImage(frame_keyStone_downCam);
         m_downCam_item->setImage(m_image_downCam);
     });
 
@@ -117,16 +147,14 @@ void PresentMainWindow::paintEvent(QPaintEvent *event)
     });
 
     QTimer::singleShot(40, this, [this] {
-        QScreen* matScreen = findScreen(MatScreen);
-        QRect g = matScreen->geometry();
-        m_image_mat = matScreen->grabWindow(0, g.x(), g.y(), g.width(), g.height()).toImage();
+        QRect g = m_matScreen->geometry();
+        m_image_mat = m_matScreen->grabWindow(0, g.x(), g.y(), g.width(), g.height()).toImage();
         m_mat_item->setImage(m_image_mat);
     });
 
     QTimer::singleShot(40, this, [this] {
-        QScreen* monitorScreen = findScreen(MonitorScreen);
-        QRect g = monitorScreen->geometry();
-        m_image_monitor = monitorScreen->grabWindow(0, g.x(), g.y(), g.width(), g.height()).toImage();
+        QRect g = m_monitorScreen->geometry();
+        m_image_monitor = m_monitorScreen->grabWindow(0, g.x(), g.y(), g.width(), g.height()).toImage();
         m_monitor_item->setImage(m_image_monitor);
     });
 }
@@ -148,6 +176,7 @@ QScreen* PresentMainWindow::findScreen(const ScreenType& type, int* index)
     {
         if (map.contains(key))
         {
+            QString xxx = screen->name();
             if (screen->name() == map[key])
             {
                 if (index)
